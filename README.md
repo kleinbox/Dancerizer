@@ -1,10 +1,10 @@
 # Dancerizer
 
-<sup>This mod originally was made for the [ModFest: Carnival](https://modfest.net/carnival), make sure to check it out!</sup>
+This mod originally was made for the [ModFest: Carnival](https://modfest.net/carnival), make sure to check it out!
 
 ***
 
-## About
+### About
 
 With this mod, players can perform taunts and whole dances with new accessories.
 
