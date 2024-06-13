@@ -1,0 +1,9 @@
+{
+  "taunt": {
+    "subtitle": "subtitles.dancerizer.taunt",
+    "sounds": [
+      "dancerizer:taunt"
+    ]
+  }
+}
+

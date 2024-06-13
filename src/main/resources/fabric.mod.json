@@ -1,0 +1,62 @@
+{
+	"schemaVersion": 1,
+	"id": "${modid}",
+	"version": "${version}",
+	"name": "${name}",
+	"description": "${description}",
+	"authors": [
+		"${author_0}"
+	],
+	"contact": {
+		"homepage": "https://KleinBox.dev/",
+		"sources": "https://github.com/KleinBox/Dancerizer/",
+		"issues": "https://github.com/KleinBox/Dancerizer/issues"
+	},
+	"custom": {
+		"modmenu": {
+			"links": {
+				"modmenu.${modid}.modfest": "https://modfest.net/carnival/",
+				"modmenu.${modid}.kofi": "https://ko-fi.com/sammykoch/",
+				"modmenu.${modid}.modrinth": "https://modrinth.com/mod/${modid}/"
+			},
+			"update_checker": true
+		}
+	},
+	"license": "LGPL-3.0-only",
+	"icon": "assets/${modid}/icon.png",
+	"environment": "*",
+	"entrypoints": {
+		"main": [
+			{
+				"value": "dev.kleinbox.Dancerizer",
+				"adapter": "kotlin"
+			}
+		],
+		"client": [
+			{
+				"value": "dev.kleinbox.DancerizerClient",
+				"adapter": "kotlin"
+			}
+		]
+	},
+	"mixins": [
+		"dancerizer.mixins.json",
+		{
+			"config": "dancerizer.client.mixins.json",
+			"environment": "client"
+		}
+	],
+	"depends": {
+		"fabricloader": ">=${fabricloader}",
+		"minecraft": "~${minecraft}-",
+		"java": ">=21",
+		"fabric-api": "~${fabricapi}",
+		"fabric-language-kotlin": "~${fabriclanguagekotlin}"
+	},
+	"recommends": {
+		"confetti": "~${confetti}"
+	},
+	"suggests": {
+		"modmenu": "*"
+	}
+}

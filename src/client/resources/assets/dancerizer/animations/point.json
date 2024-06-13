@@ -1,0 +1,18 @@
+{
+	"format_version": "1.8.0",
+	"animations": {
+		"default": {
+			"animation_length": 2.5,
+			"bones": {
+				"left_arm": {
+					"rotation": {
+						"0.0": [0, 0, 0],
+						"1.0": [-90, 0, 0],
+						"1.5": [-90, 0, 0],
+						"2.5": [0, 0, 0]
+					}
+				}
+			}
+		}
+	}
+}
