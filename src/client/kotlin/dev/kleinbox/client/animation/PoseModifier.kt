@@ -53,7 +53,7 @@ object PoseModifier {
         setBone(rightLeg, RIGHT_LEG, null, null)
     }
 
-    val HEAD = Vector3f(0f, -2f, 0f)
+    val HEAD = Vector3f(0f, 2f, 0f)
     val BODY = Vector3f(0f, 0f, 0f)
     val LEFT_ARM = Vector3f(5f, 2f, 0f)
     val RIGHT_ARM = Vector3f(-5f, 2f, 0f)

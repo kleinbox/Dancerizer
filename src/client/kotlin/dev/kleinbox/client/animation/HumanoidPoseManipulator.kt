@@ -224,7 +224,7 @@ class HumanoidPoseManipulator(name: String, path: String, data: JsonObject) {
             "left_leg" -> PoseModifier.LEFT_LEG
             "right_leg" -> PoseModifier.RIGHT_LEG
             else -> Vector3f()
-        }).clone() as Vector3f).add(Vector3f(array[0].jsonPrimitive.float, array[1].jsonPrimitive.float, array[2].jsonPrimitive.float))
+        }).clone() as Vector3f).add(Vector3f(array[0].jsonPrimitive.float, -array[1].jsonPrimitive.float, array[2].jsonPrimitive.float))
         else -> Vector3f()
     }
 }
