@@ -122,7 +122,8 @@ class HumanoidPoseManipulator(name: String, path: String, data: JsonObject) {
                                 val array = posOrRot.value.jsonObject
                                 array.forEach {
                                     val timestamp = it.key.toDouble().seconds
-                                    val value = convertRawToBakedValue(it.value.jsonArray, posOrRot.key, bone.key)
+                                    val value = convertRawToBakedValue(it.value, posOrRot.key, bone.key)
+                                        ?: Vector3f() // TODO: Add JsonObject support and throw if still this appears
 
                                     keyframe[bone.key]!![posOrRot.key]!![timestamp] = Keyframe(
                                         timestamp.toDouble(DurationUnit.SECONDS).toFloat(), value, Interpolations.LINEAR
@@ -130,8 +131,8 @@ class HumanoidPoseManipulator(name: String, path: String, data: JsonObject) {
                                 }
                             }
                             is JsonArray -> { // Single keyframe
-                                val array = posOrRot.value.jsonArray
-                                val value = convertRawToBakedValue(array, posOrRot.key, bone.key)
+                                val value = convertRawToBakedValue(posOrRot.value, posOrRot.key, bone.key)
+                                    ?: Vector3f() // TODO: Add JsonObject support and throw if still this appears
 
                                 keyframe[bone.key]!![posOrRot.key]!![0.0.seconds] = Keyframe(
                                     0f, value, Interpolations.LINEAR
@@ -211,20 +212,42 @@ class HumanoidPoseManipulator(name: String, path: String, data: JsonObject) {
         }
     }
 
-    private fun convertRawToBakedValue(array: JsonArray, type: String, bone: String) = when (type) {
-        "rotation" -> Vector3f(
-            (array[0].jsonPrimitive.float)/MAGIC_NUMBER,
-            (array[1].jsonPrimitive.float)/MAGIC_NUMBER,
-            (array[2].jsonPrimitive.float)/MAGIC_NUMBER)
-        "position" -> ((when (bone) {
-            "head" -> PoseModifier.HEAD
-            "body" -> PoseModifier.BODY
-            "left_arm" -> PoseModifier.LEFT_ARM
-            "right_arm" -> PoseModifier.RIGHT_ARM
-            "left_leg" -> PoseModifier.LEFT_LEG
-            "right_leg" -> PoseModifier.RIGHT_LEG
-            else -> Vector3f()
-        }).clone() as Vector3f).add(Vector3f(array[0].jsonPrimitive.float, -array[1].jsonPrimitive.float, array[2].jsonPrimitive.float))
-        else -> Vector3f()
+    private fun convertRawToBakedValue(value: JsonElement, type: String, bone: String): Vector3f? = when(value) {
+        is JsonArray -> when (type) {
+            "rotation" -> Vector3f(
+                (value[0].jsonPrimitive.float)/MAGIC_NUMBER,
+                (value[if (value.size > 1) 1 else 0].jsonPrimitive.float)/MAGIC_NUMBER,
+                (value[if (value.size > 1) 2 else 0].jsonPrimitive.float)/MAGIC_NUMBER)
+            "position" -> ((when (bone) {
+                "head" -> PoseModifier.HEAD
+                "body" -> PoseModifier.BODY
+                "left_arm" -> PoseModifier.LEFT_ARM
+                "right_arm" -> PoseModifier.RIGHT_ARM
+                "left_leg" -> PoseModifier.LEFT_LEG
+                "right_leg" -> PoseModifier.RIGHT_LEG
+                else -> Vector3f()
+            }).clone() as Vector3f).add(Vector3f(
+                value[0].jsonPrimitive.float,
+                -value[if (value.size > 1) 1 else 0].jsonPrimitive.float,
+                value[if (value.size > 1) 2 else 0].jsonPrimitive.float))
+            else -> null
+        }
+        is JsonPrimitive -> when (type) {
+            "rotation" -> Vector3f(
+                (value.float)/MAGIC_NUMBER,
+                (value.float)/MAGIC_NUMBER,
+                (value.float)/MAGIC_NUMBER)
+            "position" -> ((when (bone) {
+                "head" -> PoseModifier.HEAD
+                "body" -> PoseModifier.BODY
+                "left_arm" -> PoseModifier.LEFT_ARM
+                "right_arm" -> PoseModifier.RIGHT_ARM
+                "left_leg" -> PoseModifier.LEFT_LEG
+                "right_leg" -> PoseModifier.RIGHT_LEG
+                else -> Vector3f()
+            }).clone() as Vector3f).add(Vector3f(value.float, -value.float, value.float))
+            else -> null
+        }
+        is JsonObject -> null
     }
 }

@@ -28,7 +28,7 @@ public abstract class PlayerMixin extends LivingEntity implements IExpressivePla
 
     @Shadow public abstract void awardStat(ResourceLocation resourceLocation);
 
-    @Unique private short tauntCooldown = 0;
+    @Unique private short dancerizer$tauntCooldown = 0;
     @SuppressWarnings("WrongEntityDataParameterClass")
     @Unique private static final EntityDataAccessor<Integer> DATA_PLAYER_TAUNTING
             = SynchedEntityData.defineId(Player.class, EntityDataSerializers.INT);
@@ -40,14 +40,14 @@ public abstract class PlayerMixin extends LivingEntity implements IExpressivePla
     public void dancerizer$addAdditionalSaveData(CompoundTag compoundTag, CallbackInfo ci) {
         compoundTag.putLong("LastEmoteTimestamp", this.entityData.get(DATA_PLAYER_DANCE_TIMESTAMP));
         compoundTag.putInt("Taunting", dancerizer$isTaunting());
-        compoundTag.putShort("TauntCooldown", this.tauntCooldown);
+        compoundTag.putShort("TauntCooldown", this.dancerizer$tauntCooldown);
     }
 
     @Inject(method = "readAdditionalSaveData", at = @At("HEAD"))
     public void dancerizer$readAdditionalSaveData(CompoundTag compoundTag, CallbackInfo ci) {
         this.entityData.set(DATA_PLAYER_DANCE_TIMESTAMP, compoundTag.getLong("LastEmoteTimestamp"));
         this.entityData.set(DATA_PLAYER_TAUNTING, compoundTag.getInt("Taunting"));
-        this.tauntCooldown = compoundTag.getShort("TauntCooldown");
+        this.dancerizer$tauntCooldown = compoundTag.getShort("TauntCooldown");
     }
 
     @Inject(method = "defineSynchedData", at = @At("TAIL"))
@@ -59,8 +59,8 @@ public abstract class PlayerMixin extends LivingEntity implements IExpressivePla
     @Inject(method = "tick", at = @At("HEAD"))
     public void tick(CallbackInfo ci) {
         int taunt = dancerizer$isTaunting();
-        if (taunt <= 0 && this.tauntCooldown > 0) {
-            this.tauntCooldown--;
+        if (taunt <= 0 && this.dancerizer$tauntCooldown > 0) {
+            this.dancerizer$tauntCooldown--;
         } else {
             taunt--;
             this.entityData.set(DATA_PLAYER_TAUNTING, taunt);
@@ -80,9 +80,9 @@ public abstract class PlayerMixin extends LivingEntity implements IExpressivePla
 
     @Override
     public void dancerizer$taunt() {
-        if (this.tauntCooldown <= 0) {
+        if (this.dancerizer$tauntCooldown <= 0) {
             this.entityData.set(DATA_PLAYER_TAUNTING, 5);
-            this.tauntCooldown = 20;
+            this.dancerizer$tauntCooldown = 20;
 
             if (!level().isClientSide()) {
                 level().playSound(

@@ -32,15 +32,16 @@ public class HumanoidModelMixin<T extends LivingEntity> {
 
             // TODO Reset pose if dance is over
             // Check for playing dance
-            if (!Animations.INSTANCE.getPoses().containsKey("point.default"))
-                Dancerizer.INSTANCE.getLogger().warn("Animation 'point.default' has not been found");
+            if (!Animations.INSTANCE.getPoses().containsKey("mesmerizer.default"))
+                Dancerizer.INSTANCE.getLogger().warn("Animation 'mesmerizer.default' has not been found"); // TODO: Don't spam
             else {
-                HumanoidPoseManipulator point = Animations.INSTANCE.getPoses().get("point.default");
+                HumanoidPoseManipulator point = Animations.INSTANCE.getPoses().get("mesmerizer.default");
 
                 long timestamp = player.dancerizer$getLastEmoteTimestamp();
                 long time = System.currentTimeMillis();
 
                 if ((time - timestamp) <= (point.getLength() * 1000)) {
+                    //player.dancerizer$played = true;
                     point.apply(timestamp, time, head, body, leftArm, rightArm, leftLeg, rightLeg);
                     ci.cancel();
                 }
