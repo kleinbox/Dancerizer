@@ -16,6 +16,8 @@ object Constants {
 		This has been made for §aModFest: Carnival§r§7! Check it out! §o§8(Linked down below)§r§7
 		
 		§f§nCopyright © ${if (LocalDate.now().year > 2024) "2024-${LocalDate.now()}" else "2024"} ${AUTHORS[0]}§r§7
+		This is free software.  You may redistribute copies of it under the terms of the GNU Lesser General Public License, version 3 only §8<See link down below for more details>.§r§7
+		There is NO WARRANTY, to the extent permitted by law.
 	""".trimIndent()
 
 	// Fabric Properties

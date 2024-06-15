@@ -16,8 +16,9 @@
 		"modmenu": {
 			"links": {
 				"modmenu.${modid}.modfest": "https://modfest.net/carnival/",
+				"modmenu.${modid}.modrinth": "https://modrinth.com/mod/${modid}/",
 				"modmenu.${modid}.kofi": "https://ko-fi.com/sammykoch/",
-				"modmenu.${modid}.modrinth": "https://modrinth.com/mod/${modid}/"
+				"modmenu.${modid}.lgplv3": "https://www.gnu.org/licenses/lgpl-3.0-standalone.html"
 			},
 			"update_checker": true
 		}
