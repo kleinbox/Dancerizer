@@ -3,6 +3,8 @@ package dev.kleinbox.common.mixin;
 import dev.kleinbox.common.IExpressivePlayer;
 import dev.kleinbox.common.SoundEvents;
 import dev.kleinbox.common.Statistics;
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
@@ -27,6 +29,10 @@ public abstract class PlayerMixin extends LivingEntity implements IExpressivePla
     }
 
     @Shadow public abstract void awardStat(ResourceLocation resourceLocation);
+
+    @Environment(EnvType.CLIENT)
+    @Unique
+    private boolean dancerizer$wasPlaying = false;
 
     @Unique private short dancerizer$tauntCooldown = 0;
     @SuppressWarnings("WrongEntityDataParameterClass")
@@ -102,5 +108,17 @@ public abstract class PlayerMixin extends LivingEntity implements IExpressivePla
     @Override
     public int dancerizer$isTaunting() {
         return this.entityData.get(DATA_PLAYER_TAUNTING);
+    }
+
+    @Environment(EnvType.CLIENT)
+    @Override
+    public boolean dancerizer$wasPlaying() {
+        return this.dancerizer$wasPlaying;
+    }
+
+    @Environment(EnvType.CLIENT)
+    @Override
+    public void dancerizer$setPlaying(boolean state) {
+        this.dancerizer$wasPlaying = state;
     }
 }

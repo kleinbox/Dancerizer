@@ -27,23 +27,25 @@ public class HumanoidModelMixin<T extends LivingEntity> {
     @Inject(method = "setupAnim(Lnet/minecraft/world/entity/LivingEntity;FFFFF)V", at = @At("HEAD"), cancellable = true)
     public void setupAnim(T livingEntity, float f, float g, float h, float i, float j, CallbackInfo ci) {
         if (livingEntity instanceof IExpressivePlayer player) {
+            // TODO Dont animate when player is not standing still
             // TODO We will assume that the point and dab emote have been applied, later, this will check for the item components
 
-
-            // TODO Reset pose if dance is over
             // Check for playing dance
-            if (!Animations.INSTANCE.getPoses().containsKey("mesmerizer.default"))
-                Dancerizer.INSTANCE.getLogger().warn("Animation 'mesmerizer.default' has not been found"); // TODO: Don't spam
+            if (!Animations.INSTANCE.getPoses().containsKey("pokedance.default"))
+                Dancerizer.INSTANCE.getLogger().warn("Animation 'pokedance.default' has not been found"); // TODO: Don't spam
             else {
-                HumanoidPoseManipulator point = Animations.INSTANCE.getPoses().get("mesmerizer.default");
+                HumanoidPoseManipulator point = Animations.INSTANCE.getPoses().get("pokedance.default");
 
                 long timestamp = player.dancerizer$getLastEmoteTimestamp();
                 long time = System.currentTimeMillis();
 
                 if ((time - timestamp) <= (point.getLength() * 1000)) {
-                    //player.dancerizer$played = true;
+                    player.dancerizer$setPlaying(true);
                     point.apply(timestamp, time, head, body, leftArm, rightArm, leftLeg, rightLeg);
                     ci.cancel();
+                } else if (player.dancerizer$wasPlaying()) {
+                    PoseModifier.INSTANCE.reset(head, body, leftArm, rightArm, leftLeg, rightLeg);
+                    player.dancerizer$setPlaying(false);
                 }
             }
 

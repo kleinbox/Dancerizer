@@ -45,18 +45,19 @@ object PoseModifier {
               rightArm: ModelPart?,
               leftLeg: ModelPart?,
               rightLeg: ModelPart?) {
-        setBone(head, HEAD, null, null)
-        setBone(body, BODY, null, null)
-        setBone(leftArm, LEFT_ARM, null, null)
-        setBone(rightArm, RIGHT_ARM, null, null)
-        setBone(leftLeg, LEFT_LEG, null, null)
-        setBone(rightLeg, RIGHT_LEG, null, null)
+        setBone(head, HEAD, NULL, null)
+        setBone(body, BODY, NULL, null)
+        setBone(leftArm, LEFT_ARM, NULL, null)
+        setBone(rightArm, RIGHT_ARM, NULL, null)
+        setBone(leftLeg, LEFT_LEG, NULL, null)
+        setBone(rightLeg, RIGHT_LEG, NULL, null)
     }
 
-    val HEAD = Vector3f(0f, 2f, 0f)
+    val HEAD = Vector3f(0f, 0f, 0f)
     val BODY = Vector3f(0f, 0f, 0f)
     val LEFT_ARM = Vector3f(5f, 2f, 0f)
     val RIGHT_ARM = Vector3f(-5f, 2f, 0f)
     val LEFT_LEG = Vector3f(1.9f, 12f, 0f)
     val RIGHT_LEG = Vector3f(-1.9f, 12f, 0f)
+    val NULL = Vector3f(0f, 0f, 0f)
 }
