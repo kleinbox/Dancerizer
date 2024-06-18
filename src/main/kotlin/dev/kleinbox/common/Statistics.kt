@@ -8,8 +8,8 @@ import net.minecraft.resources.ResourceLocation.fromNamespaceAndPath
 import net.minecraft.stats.StatFormatter
 import net.minecraft.stats.Stats
 
-@Suppress("SameParameterValue")
-object Statistics {
+object Statistics : RegisteringContainer<ResourceLocation>(BuiltInRegistries.CUSTOM_STAT) {
+
     val TAUNT = register("taunt")
 
     private fun register(name: String): ResourceLocation {

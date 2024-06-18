@@ -1,5 +1,6 @@
 package dev.kleinbox.common.item
 
+import dev.kleinbox.common.Components
 import net.minecraft.core.Holder
 import net.minecraft.core.component.DataComponentType
 import net.minecraft.sounds.SoundEvent

@@ -2,9 +2,9 @@ package dev.kleinbox
 
 import dev.kleinbox.common.SoundEvents
 import dev.kleinbox.common.Statistics
-import dev.kleinbox.common.item.Components
+import dev.kleinbox.common.Components
 import dev.kleinbox.common.item.Items
-import dev.kleinbox.common.network.Payloads
+import dev.kleinbox.common.payload.Payloads
 import net.fabricmc.api.ModInitializer
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory

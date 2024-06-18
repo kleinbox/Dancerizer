@@ -1,7 +1,5 @@
-package dev.kleinbox.common.network
+package dev.kleinbox.common.payload
 
-import dev.kleinbox.common.network.payloads.DanceTimestampPayload
-import dev.kleinbox.common.network.payloads.TauntPayload
 import net.fabricmc.fabric.api.networking.v1.PayloadTypeRegistry
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking
 import net.minecraft.network.FriendlyByteBuf

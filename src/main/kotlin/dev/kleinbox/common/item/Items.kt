@@ -1,24 +1,15 @@
 package dev.kleinbox.common.item
 
-import dev.kleinbox.Dancerizer.MODID
-import net.minecraft.core.Registry
+import dev.kleinbox.common.RegisteringContainer
 import net.minecraft.core.registries.BuiltInRegistries
-import net.minecraft.resources.ResourceLocation.fromNamespaceAndPath
 import net.minecraft.world.entity.EquipmentSlot
 import net.minecraft.world.item.Item
 
-object Items {
-    private val ITEMS: MutableSet<Pair<String, out Item>> = mutableSetOf()
+object Items : RegisteringContainer<Item>(BuiltInRegistries.ITEM) {
 
-    val headband = (Pair("headband", GroovingTrinket(
+    val HEADBAND = register("headband", GroovingTrinket(
         EquipmentSlot.HEAD,
         GroovingTrinket.basePropertiesWithDance("mesmerizer.default", 20 * 11),
         null
-    )).also { ITEMS.add(it) }).second
-
-    init {
-        ITEMS.forEach {
-            Registry.register(BuiltInRegistries.ITEM, fromNamespaceAndPath(MODID, it.first), it.second)
-        }
-    }
+    ))
 }

@@ -4,6 +4,8 @@ import com.mojang.datafixers.util.Pair;
 import dev.kleinbox.common.ExpressivePlayer;
 import dev.kleinbox.common.SoundEvents;
 import dev.kleinbox.common.Statistics;
+import dev.kleinbox.common.api.PlayerAnimationCallback;
+import dev.kleinbox.common.api.PlayerAnimationStatus;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
@@ -27,6 +29,8 @@ public abstract class PlayerMixin extends LivingEntity implements ExpressivePlay
     protected PlayerMixin(EntityType<? extends LivingEntity> entityType, Level level) {
         super(entityType, level);
     }
+
+    private static final int TAUNT_COOLDOWN = 20;
 
     @Shadow public abstract void awardStat(ResourceLocation resourceLocation);
 
@@ -76,11 +80,19 @@ public abstract class PlayerMixin extends LivingEntity implements ExpressivePlay
     public void tick(CallbackInfo ci) {
         int taunt = dancerizer$isTaunting();
         if (taunt <= 0) {
-            if (this.dancerizer$tauntCooldown >= 1) {
-                this.dancerizer$tauntCooldown--;
-                if (this.dancerizer$tauntCooldown == 1)
-                    this.entityData.set(DATA_PLAYER_POSE_ANIMATION, "");
+            if (this.dancerizer$tauntCooldown == TAUNT_COOLDOWN) {
+                PlayerAnimationCallback.EVENT.invoker().interact(
+                        this,
+                        new PlayerAnimationStatus(
+                                PlayerAnimationStatus.TYPE.TAUNTING,
+                                0,
+                                dancerizer$getAnimationPose()
+                        )
+                );
+                this.entityData.set(DATA_PLAYER_POSE_ANIMATION, "");
             }
+            if (this.dancerizer$tauntCooldown >= 1)
+                this.dancerizer$tauntCooldown--;
         } else {
             taunt--;
             this.entityData.set(DATA_PLAYER_TAUNTING, taunt);
@@ -90,8 +102,17 @@ public abstract class PlayerMixin extends LivingEntity implements ExpressivePlay
         if (duration >= 1) {
             duration--;
             dancerizer$setDancePlaying(duration);
-            if (duration == 1)
+            if (duration == 0) {
+                PlayerAnimationCallback.EVENT.invoker().interact(
+                        this,
+                        new PlayerAnimationStatus(
+                                PlayerAnimationStatus.TYPE.DANCING,
+                                0,
+                                dancerizer$getAnimationPose()
+                        )
+                );
                 this.entityData.set(DATA_PLAYER_POSE_ANIMATION, "");
+            }
         }
     }
 
@@ -112,7 +133,7 @@ public abstract class PlayerMixin extends LivingEntity implements ExpressivePlay
         if (this.dancerizer$tauntCooldown <= 0) {
             this.entityData.set(DATA_PLAYER_TAUNTING, 5);
             this.entityData.set(DATA_PLAYER_POSE_ANIMATION, taunt);
-            this.dancerizer$tauntCooldown = 20;
+            this.dancerizer$tauntCooldown = TAUNT_COOLDOWN;
 
             if (!level().isClientSide()) {
                 level().playSound(
