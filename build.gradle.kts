@@ -32,10 +32,13 @@ object Constants {
 	const val FABRIC_VERSION = "0.100.1+1.21"
 	const val MODMENU_VERSION = "11.0.0-beta.1"
 	const val CONFETTI_VERSION = "1.0.0+1.21"
+
+	// Runtime only
+	const val COMPONENTVIEWER_VERSION = "1.1.2+1.21"
 }
 
 plugins {
-	id("fabric-loom") version "1.6.5"
+	id("fabric-loom") version "1.7.1"
 	kotlin("jvm") version "2.0.0"
 	kotlin("plugin.serialization") version "2.0.0"
 }
@@ -82,6 +85,7 @@ dependencies {
 	modImplementation("net.fabricmc", "fabric-language-kotlin", Constants.KOTLIN_VERSION)
 
 	modRuntimeOnly("maven.modrinth","modmenu", Constants.MODMENU_VERSION)
+	modRuntimeOnly("maven.modrinth", "component-viewer", Constants.COMPONENTVIEWER_VERSION)
 
 	implementation("org.jetbrains.kotlinx", "kotlinx-serialization-json", Constants.JSON_VERSION)
 }
