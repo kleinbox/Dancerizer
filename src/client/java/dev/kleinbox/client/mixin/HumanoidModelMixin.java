@@ -1,10 +1,9 @@
 package dev.kleinbox.client.mixin;
 
-import dev.kleinbox.Dancerizer;
 import dev.kleinbox.client.animation.Animations;
 import dev.kleinbox.client.animation.HumanoidPoseManipulator;
 import dev.kleinbox.client.animation.PoseModifier;
-import dev.kleinbox.common.IExpressivePlayer;
+import dev.kleinbox.common.ExpressivePlayer;
 import net.minecraft.client.model.HumanoidModel;
 import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.world.entity.LivingEntity;
@@ -26,41 +25,33 @@ public class HumanoidModelMixin<T extends LivingEntity> {
 
     @Inject(method = "setupAnim(Lnet/minecraft/world/entity/LivingEntity;FFFFF)V", at = @At("HEAD"), cancellable = true)
     public void setupAnim(T livingEntity, float f, float g, float h, float i, float j, CallbackInfo ci) {
-        if (livingEntity instanceof IExpressivePlayer player) {
-            // TODO Dont animate when player is not standing still
-            // TODO We will assume that the point and dab emote have been applied, later, this will check for the item components
+        if (livingEntity instanceof ExpressivePlayer player) {
+            // TODO Don't animate when player is not standing still
 
-            // Check for playing dance
-            if (!Animations.INSTANCE.getPoses().containsKey("pokedance.default"))
-                Dancerizer.INSTANCE.getLogger().warn("Animation 'pokedance.default' has not been found"); // TODO: Don't spam
-            else {
-                HumanoidPoseManipulator point = Animations.INSTANCE.getPoses().get("pokedance.default");
+            // Check for valid playing animation
+            String anim_type = player.dancerizer$getAnimationPose();
+            if (!anim_type.isBlank() && Animations.INSTANCE.getPoses().containsKey(anim_type)) {
+                HumanoidPoseManipulator animation = Animations.INSTANCE.getPoses().get(anim_type);
 
-                long timestamp = player.dancerizer$getLastEmoteTimestamp();
-                long time = System.currentTimeMillis();
+                if (player.dancerizer$isTaunting() > 0) {
+                    // Is taunting
+                    if (player.dancerizer$isTaunting() > 1) {
+                        animation.apply(0, 0, head, body, leftArm, rightArm, leftLeg, rightLeg);
+                        ci.cancel();
+                    } else if (player.dancerizer$isTaunting() == 1)
+                        PoseModifier.INSTANCE.reset(head, body, leftArm, rightArm, leftLeg, rightLeg);
+                } else {
+                    long timestamp = player.dancerizer$getLastEmoteTimestamp();
+                    long time = System.currentTimeMillis();
+                    int duration = player.dancerizer$isDancePlaying();
 
-                if ((time - timestamp) <= (point.getLength() * 1000)) {
-                    player.dancerizer$setPlaying(true);
-                    point.apply(timestamp, time, head, body, leftArm, rightArm, leftLeg, rightLeg);
-                    ci.cancel();
-                } else if (player.dancerizer$wasPlaying()) {
-                    PoseModifier.INSTANCE.reset(head, body, leftArm, rightArm, leftLeg, rightLeg);
-                    player.dancerizer$setPlaying(false);
+                    // Check for dance
+                    if (duration > 1 && (time - timestamp) <= (animation.getLength() * 1000)) {
+                        animation.apply(timestamp, time, head, body, leftArm, rightArm, leftLeg, rightLeg);
+                        ci.cancel();
+                    } else if (duration == 1)
+                        PoseModifier.INSTANCE.reset(head, body, leftArm, rightArm, leftLeg, rightLeg);
                 }
-            }
-
-            // Check for taunt
-            if (player.dancerizer$isTaunting() > 1) {
-                if (!Animations.INSTANCE.getPoses().containsKey("dab.default"))
-                    Dancerizer.INSTANCE.getLogger().warn("Animation 'dab.default' has not been found");
-                else {
-                    HumanoidPoseManipulator dab = Animations.INSTANCE.getPoses().get("dab.default");
-                    dab.apply(0, 0, head, body, leftArm, rightArm, leftLeg, rightLeg);
-
-                    ci.cancel();
-                }
-            } else if (player.dancerizer$isTaunting() == 1) {
-                PoseModifier.INSTANCE.reset(head, body, leftArm, rightArm, leftLeg, rightLeg);
             }
         }
     }

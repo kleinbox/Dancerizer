@@ -4,6 +4,11 @@
   "dancerizer.keybind.taunt": "Perform Taunt",
   "dancerizer.keybind.dance": "Perform Dance",
 
+  "info.dancerizer.missing_taunt": "You cannot use a taunt without the appropriate equipment",
+  "info.dancerizer.missing_dance": "You cannot perform a dance without the appropriate equipment",
+
+  "stat.dancerizer.taunt": "Used Taunts",
+
   "modmenu.dancerizer.modrinth": "Modrinth Page",
   "modmenu.dancerizer.modfest": "ModFest: Carnival",
   "modmenu.dancerizer.kofi": "Support me on §lKo-fi§r§n! §c♡§r§7",

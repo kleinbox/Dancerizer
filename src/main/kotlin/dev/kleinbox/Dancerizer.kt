@@ -2,6 +2,8 @@ package dev.kleinbox
 
 import dev.kleinbox.common.SoundEvents
 import dev.kleinbox.common.Statistics
+import dev.kleinbox.common.item.Components
+import dev.kleinbox.common.item.Items
 import dev.kleinbox.common.network.Payloads
 import net.fabricmc.api.ModInitializer
 import org.slf4j.Logger
@@ -13,16 +15,14 @@ object Dancerizer : ModInitializer {
 
 	/*
 	TODO:
-		- [ ] Dances:
-			- [ ] MESMERIZER
-			- [ ] Lethal company-ish dance (as default perhaps?)
-			- [ ] boogie boogie bam bam
-			- [ ] Fortnite Floss dance (why am I like this)
-			- [ ] We Are Number One
+		- [-] Dances:
+			- [x] MESMERIZER
+			- [x] Pokedance
+			- [-] Teto's Growl
 		- [x] Taunt from Pizza Tower
-			- [ ] Invincible
+			- [ ] Block incoming hit randomly
 			- [ ] Particles
-		- [ ] Hits (e.g. whenever a key needs to be held down but hasn't)
+		- [ ] Hints (e.g. whenever a key needs to be held down but hasn't)
 			- [ ] Make them disable
 		- [ ] Make taunt cooldown configurable
 	 */
@@ -32,5 +32,7 @@ object Dancerizer : ModInitializer {
 		Payloads
 		SoundEvents
 		Statistics
+		Components
+		Items
 	}
 }

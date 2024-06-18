@@ -2,6 +2,10 @@ package dev.kleinbox.client
 
 import com.mojang.blaze3d.platform.InputConstants
 import dev.kleinbox.Dancerizer.MODID
+import dev.kleinbox.Dancerizer.logger
+import dev.kleinbox.client.animation.Animations
+import dev.kleinbox.common.item.Components
+import dev.kleinbox.common.item.GroovingTrinket
 import dev.kleinbox.common.network.payloads.DanceTimestampPayload
 import dev.kleinbox.common.network.payloads.TauntPayload
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents
@@ -30,6 +34,14 @@ object Inputs {
         if (isNotInWorld(client))
             return@action
 
+        // Validate animations
+        val dances = GroovingTrinket.gatherItemWithDance(client.player!!)
+        dances.forEach {
+            val animation = it.components.get(Components.DANCE)
+            if (animation != null && !Animations.poses.contains(animation.first))
+                logger.warn("Animation for dance '${animation}' is not present but could be requested")
+        }
+
         ClientPlayNetworking.send(DanceTimestampPayload)
     }
 
@@ -42,6 +54,14 @@ object Inputs {
 
         if (isNotInWorld(client))
             return@action
+
+        // Validate animations
+        val taunts = GroovingTrinket.gatherItemWithDance(client.player!!)
+        taunts.forEach {
+            val animation = it.components.get(Components.TAUNT)
+            if (!Animations.poses.contains(animation))
+                logger.warn("Animation for taunt '${animation}' is not present but could be requested")
+        }
 
         ClientPlayNetworking.send(TauntPayload)
     }
