@@ -1,5 +1,22 @@
 {
-  "subtitles.dancerizer.taunts": "Taunting",
+  "item.dancerizer.plastic_rose": "Plastic Rose",
+  "item.dancerizer.rrongs_tie": "Rrong's Tie",
+  "item.dancerizer.athletic_wings": "Athletic Wings",
+  "item.dancerizer.mlg_glasses": "MLG Glasses",
+  "item.dancerizer.pokebow": "PokéBow",
+  "item.dancerizer.mesmerizing_mask": "Mesmerizing Mask",
+
+  "animation.title.taunt.objection": "OBJECTION!",
+  "animation.title.taunt.flexing": "Flexing",
+  "animation.title.taunt.romanza": "Romanza",
+  "animation.title.taunt.dab": "Dab",
+  "animation.title.dance.pokedance": "Pokédance",
+  "animation.title.dance.mesmerizer": "MESMERIZER",
+
+  "item.modifiers.dancerizer.taunt": "Taunt:",
+  "item.modifiers.dancerizer.dance": "Dance:",
+
+  "subtitles.dancerizer.taunt": "Taunting",
 
   "dancerizer.keybind.taunt": "Perform Taunt",
   "dancerizer.keybind.dance": "Perform Dance",
@@ -8,6 +25,8 @@
   "info.dancerizer.missing_dance": "You cannot perform a dance without the appropriate equipment",
 
   "stat.dancerizer.taunt": "Used Taunts",
+
+  "itemGroup.dancerizer": "Dancerizer",
 
   "modmenu.dancerizer.modrinth": "Modrinth Page",
   "modmenu.dancerizer.modfest": "ModFest: Carnival",

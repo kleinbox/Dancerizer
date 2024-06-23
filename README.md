@@ -23,7 +23,7 @@ Because the animations and items triggering the animations are **all data driven
 
 Because the used animation format is quite complex and comes in many shapes, not all features have yet been implemented. Here is a list of all known missing features:
 
-- Scale keyframes
+- Scale and particle keyframes
 - Keyframe `pre`, `post` and `lerp_mode` settings
 - Particles in animations
 - Molang expression support

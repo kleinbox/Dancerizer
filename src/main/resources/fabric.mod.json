@@ -29,13 +29,13 @@
 	"entrypoints": {
 		"main": [
 			{
-				"value": "dev.kleinbox.Dancerizer",
+				"value": "dev.kleinbox.dancerizer.Dancerizer",
 				"adapter": "kotlin"
 			}
 		],
 		"client": [
 			{
-				"value": "dev.kleinbox.DancerizerClient",
+				"value": "dev.kleinbox.dancerizer.DancerizerClient",
 				"adapter": "kotlin"
 			}
 		]

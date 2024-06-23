@@ -1,11 +1,11 @@
 {
   "required": true,
-  "package": "dev.kleinbox.client.mixin",
+  "package": "dev.kleinbox.dancerizer.client.mixin",
   "compatibilityLevel": "JAVA_21",
   "client": [
     "HumanoidModelMixin"
   ],
   "injectors": {
     "defaultRequire": 1
-	}
+  }
 }
