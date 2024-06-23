@@ -93,22 +93,22 @@
 		},
 		"ground": {
 			"rotation": [90, 0, 0],
-			"translation": [0, -8, 0],
+			"translation": [0, -13.25, 0],
 			"scale": [1.6, 1.6, 1.6]
 		},
 		"gui": {
-			"rotation": [20, 169, -39],
-			"translation": [2.5, 6, 0],
+			"rotation": [-52, 180, -31],
+			"translation": [-0.25, -11, 0],
 			"scale": [1.8, 1.8, 1.8]
-		},
-		"fixed": {
-			"translation": [0, 0, 13.75],
-			"scale": [1.6, 1.6, 1.6]
 		},
 		"head": {
 			"rotation": [0, 0, 180],
 			"translation": [0, -4, 6],
 			"scale": [1, -1, 1]
+		},
+		"fixed": {
+			"translation": [0, 0, 13.75],
+			"scale": [1.6, 1.6, 1.6]
 		}
 	},
 	"groups": [

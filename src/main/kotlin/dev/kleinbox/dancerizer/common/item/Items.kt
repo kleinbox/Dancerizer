@@ -20,6 +20,12 @@ object Items : RegisteringContainer<Item>(BuiltInRegistries.ITEM) {
         null
     ))
 
+    val HORSE_MASK = register("horse_mask", GroovingTrinket(
+        EquipmentSlot.HEAD,
+        GroovingTrinket.basePropertiesWithDance("dance/geddan.default", (20 * 16.4).toInt()),
+        null
+    ))
+
     val MLG_GLASSES = register("mlg_glasses", GroovingTrinket(
         EquipmentSlot.HEAD,
         GroovingTrinket.basePropertiesWithTaunt("taunt/dab.default"),

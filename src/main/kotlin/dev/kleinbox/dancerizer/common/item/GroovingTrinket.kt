@@ -4,6 +4,7 @@ import dev.kleinbox.dancerizer.common.Components
 import dev.kleinbox.dancerizer.common.ExpressivePlayer
 import net.fabricmc.api.EnvType
 import net.fabricmc.api.Environment
+import net.fabricmc.fabric.api.item.v1.EquipmentSlotProvider
 import net.minecraft.ChatFormatting
 import net.minecraft.core.Holder
 import net.minecraft.core.component.DataComponentType
@@ -11,10 +12,7 @@ import net.minecraft.network.chat.Component
 import net.minecraft.sounds.SoundEvent
 import net.minecraft.sounds.SoundEvents
 import net.minecraft.world.entity.EquipmentSlot
-import net.minecraft.world.item.Equipable
-import net.minecraft.world.item.Item
-import net.minecraft.world.item.ItemStack
-import net.minecraft.world.item.TooltipFlag
+import net.minecraft.world.item.*
 
 class GroovingTrinket(
     private val slot: EquipmentSlot, properties: Properties,
@@ -65,8 +63,12 @@ class GroovingTrinket(
     companion object {
         fun basePropertiesWithTaunt(taunt: String): Properties = Properties()
             .component(Components.TAUNT, taunt)
+            .rarity(Rarity.UNCOMMON)
+            .stacksTo(1)
         fun basePropertiesWithDance(dance: String, duration: Int): Properties = Properties()
             .component(Components.DANCE, com.mojang.datafixers.util.Pair(dance, duration))
+            .rarity(Rarity.UNCOMMON)
+            .stacksTo(1)
 
         fun gatherItemWithDance(player: ExpressivePlayer) = filterItemsWithComponent(player, Components.DANCE)
         fun gatherItemWithTaunt(player: ExpressivePlayer) = filterItemsWithComponent(player, Components.TAUNT)
