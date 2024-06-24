@@ -11,11 +11,12 @@ import net.minecraft.stats.Stats
 @Suppress("SameParameterValue")
 object Statistics : RegisteringContainer<ResourceLocation>(BuiltInRegistries.CUSTOM_STAT) {
 
-    val TAUNT = register("taunt")
+    val TAUNT = register("taunt", StatFormatter.DEFAULT)
+    val DANCE = register("dance", StatFormatter.TIME)
 
-    private fun register(name: String): ResourceLocation {
+    private fun register(name: String, formatter: StatFormatter): ResourceLocation {
         val registered = Registry.register(BuiltInRegistries.CUSTOM_STAT, name, fromNamespaceAndPath(MODID, name))
-        Stats.CUSTOM.get(registered, StatFormatter.DEFAULT)
+        Stats.CUSTOM.get(registered, formatter)
 
         return registered
     }

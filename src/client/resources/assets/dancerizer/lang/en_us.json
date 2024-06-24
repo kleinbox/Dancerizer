@@ -30,6 +30,7 @@
   "dancerizer.options.button.toggle_hints.tooltip": "Determines when a message should be shown after hitting a dance or taunt hotkey without success.",
 
   "stat.dancerizer.taunt": "Used Taunts",
+  "stat.dancerizer.dance": "Danced for",
 
   "itemGroup.dancerizer": "Dancerizer",
 

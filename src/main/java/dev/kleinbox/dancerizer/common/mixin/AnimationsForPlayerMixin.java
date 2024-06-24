@@ -104,6 +104,7 @@ public abstract class AnimationsForPlayerMixin extends LivingEntity implements E
 
         int duration = dancerizer$isDancePlaying();
         if (duration >= 1) {
+            this.awardStat(Statistics.INSTANCE.getDANCE());
             duration--;
             dancerizer$setDancePlaying(duration);
             if (duration == 0) {
