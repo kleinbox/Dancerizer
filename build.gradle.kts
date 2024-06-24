@@ -33,6 +33,7 @@ object Constants {
 	const val FABRIC_VERSION = "0.100.1+1.21"
 	const val MODMENU_VERSION = "11.0.0-beta.1"
 	const val CONFETTI_VERSION = "1.0.0+1.21"
+	const val SODIUM_VERSION = "mc1.20.1-0.5.10"
 
 	// Runtime only
 	const val COMPONENTVIEWER_VERSION = "1.1.2+1.21"
@@ -88,9 +89,11 @@ dependencies {
 
 	modLocalRuntime("maven.modrinth", "component-viewer", Constants.COMPONENTVIEWER_VERSION)
 	modLocalRuntime("maven.modrinth","modmenu", Constants.MODMENU_VERSION)
+	modRuntimeOnly("maven.modrinth", "sodium", Constants.SODIUM_VERSION)
 
 	implementation("org.jetbrains.kotlinx", "kotlinx-serialization-json", Constants.JSON_VERSION)
 	implementation("net.peanuuutz.tomlkt", "tomlkt", Constants.TOML_VERSION)
+	include("net.peanuuutz.tomlkt", "tomlkt", Constants.TOML_VERSION)
 }
 
 tasks.processResources {

@@ -17,6 +17,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 @Mixin(HumanoidModel.class)
 public class HumanoidModelMixin<T extends LivingEntity> {
     @Shadow @Final public ModelPart head;
+    @Shadow @Final public ModelPart hat;
     @Shadow @Final public ModelPart body;
     @Shadow @Final public ModelPart rightArm;
     @Shadow @Final public ModelPart leftArm;
@@ -26,8 +27,6 @@ public class HumanoidModelMixin<T extends LivingEntity> {
     @Inject(method = "setupAnim(Lnet/minecraft/world/entity/LivingEntity;FFFFF)V", at = @At("HEAD"), cancellable = true)
     public void dancerizer$setupAnim(T livingEntity, float f, float g, float h, float i, float j, CallbackInfo ci) {
         if (livingEntity instanceof ExpressivePlayer player) {
-            // TODO Don't animate when player is not standing still
-
             // Check for valid playing animation
             String anim_type = player.dancerizer$getAnimationPose();
             if (!anim_type.isBlank() && Animations.INSTANCE.getPoses().containsKey(anim_type)) {
@@ -37,9 +36,14 @@ public class HumanoidModelMixin<T extends LivingEntity> {
                     // Is taunting
                     if (player.dancerizer$isTaunting() > 1) {
                         animation.apply(0, 0, head, body, leftArm, rightArm, leftLeg, rightLeg);
+                        hat.setPos(head.x, head.y, head.z);
+                        hat.setRotation(head.xRot, head.yRot, head.zRot);
                         ci.cancel();
-                    } else if (player.dancerizer$isTaunting() == 1)
+                    } else if (player.dancerizer$isTaunting() == 1) {
                         PoseModifier.INSTANCE.reset(head, body, leftArm, rightArm, leftLeg, rightLeg);
+                        hat.setPos(head.x, head.y, head.z);
+                        hat.setRotation(head.xRot, head.yRot, head.zRot);
+                    }
                 } else {
                     long timestamp = player.dancerizer$getLastEmoteTimestamp();
                     long time = System.currentTimeMillis();
@@ -48,9 +52,14 @@ public class HumanoidModelMixin<T extends LivingEntity> {
                     // Check for dance
                     if (duration > 1 && (time - timestamp) <= (animation.getLength() * 1000)) {
                         animation.apply(timestamp, time, head, body, leftArm, rightArm, leftLeg, rightLeg);
+                        hat.setPos(head.x, head.y, head.z);
+                        hat.setRotation(head.xRot, head.yRot, head.zRot);
                         ci.cancel();
-                    } else if (duration == 1)
+                    } else if (duration == 1) {
                         PoseModifier.INSTANCE.reset(head, body, leftArm, rightArm, leftLeg, rightLeg);
+                        hat.setPos(head.x, head.y, head.z);
+                        hat.setRotation(head.xRot, head.yRot, head.zRot);
+                    }
                 }
             }
         }
