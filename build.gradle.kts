@@ -27,6 +27,7 @@ object Constants {
 
 	// Dependencies
 	const val JSON_VERSION = "1.7.0"
+	const val TOML_VERSION = "0.4.0"
 
 	// Mod Dependencies
 	const val FABRIC_VERSION = "0.100.1+1.21"
@@ -83,11 +84,13 @@ dependencies {
 
 	modImplementation("net.fabricmc.fabric-api", "fabric-api", Constants.FABRIC_VERSION)
 	modImplementation("net.fabricmc", "fabric-language-kotlin", Constants.KOTLIN_VERSION)
+	modApi("maven.modrinth","modmenu", Constants.MODMENU_VERSION)
 
-	modRuntimeOnly("maven.modrinth","modmenu", Constants.MODMENU_VERSION)
-	modRuntimeOnly("maven.modrinth", "component-viewer", Constants.COMPONENTVIEWER_VERSION)
+	modLocalRuntime("maven.modrinth", "component-viewer", Constants.COMPONENTVIEWER_VERSION)
+	modLocalRuntime("maven.modrinth","modmenu", Constants.MODMENU_VERSION)
 
 	implementation("org.jetbrains.kotlinx", "kotlinx-serialization-json", Constants.JSON_VERSION)
+	implementation("net.peanuuutz.tomlkt", "tomlkt", Constants.TOML_VERSION)
 }
 
 tasks.processResources {

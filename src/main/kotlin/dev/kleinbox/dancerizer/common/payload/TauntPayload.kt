@@ -8,6 +8,7 @@ import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking.Context
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking.PlayPayloadHandler
 import net.minecraft.network.FriendlyByteBuf
 import net.minecraft.network.chat.Component
+import net.minecraft.network.chat.MutableComponent
 import net.minecraft.network.codec.StreamCodec
 import net.minecraft.network.protocol.common.custom.CustomPacketPayload
 import net.minecraft.resources.ResourceLocation.fromNamespaceAndPath
@@ -28,7 +29,7 @@ object TauntPayload : Payloads.CustomPayload<TauntPayload>() {
 
         context.player().server.execute {
             val player = context.player() as ServerPlayer
-            if ((player as ExpressivePlayer).`dancerizer$isTaunting`() > 0)
+            if ((player as ExpressivePlayer).`dancerizer$isTaunting`() > 1 || (player as ExpressivePlayer).`dancerizer$isDancePlaying`() > 0)
                 return@execute
 
             val taunts = GroovingTrinket.gatherItemWithTaunt(player)

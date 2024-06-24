@@ -1,6 +1,7 @@
 package dev.kleinbox.dancerizer.common.mixin;
 
 import com.mojang.datafixers.util.Pair;
+import dev.kleinbox.dancerizer.Dancerizer;
 import dev.kleinbox.dancerizer.common.ExpressivePlayer;
 import dev.kleinbox.dancerizer.common.SoundEvents;
 import dev.kleinbox.dancerizer.common.Statistics;
@@ -12,9 +13,7 @@ import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundSource;
-import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
-import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Inventory;
@@ -35,9 +34,6 @@ public abstract class AnimationsForPlayerMixin extends LivingEntity implements E
     protected AnimationsForPlayerMixin(EntityType<? extends LivingEntity> entityType, Level level) {
         super(entityType, level);
     }
-
-    // TODO: Get from server config
-    @Unique private static final int TAUNT_COOLDOWN = 20;
 
     @Shadow public abstract void awardStat(ResourceLocation resourceLocation);
 
@@ -77,7 +73,7 @@ public abstract class AnimationsForPlayerMixin extends LivingEntity implements E
     }
 
     @Inject(method = "defineSynchedData", at = @At("TAIL"))
-    protected void defineSynchedData(SynchedEntityData.Builder builder, CallbackInfo ci) {
+    protected void dancerizer$defineSynchedData(SynchedEntityData.Builder builder, CallbackInfo ci) {
         builder.define(DATA_PLAYER_TAUNTING, 0);
         builder.define(DATA_PLAYER_POSE_ANIMATION, "");
         builder.define(DATA_PLAYER_DANCE_TIMESTAMP, 0L);
@@ -85,10 +81,10 @@ public abstract class AnimationsForPlayerMixin extends LivingEntity implements E
     }
 
     @Inject(method = "tick", at = @At("HEAD"))
-    public void tick(CallbackInfo ci) {
+    public void dancerizer$tick(CallbackInfo ci) {
         int taunt = dancerizer$isTaunting();
         if (taunt <= 0) {
-            if (this.dancerizer$tauntCooldown == TAUNT_COOLDOWN) {
+            if (this.dancerizer$tauntCooldown == Dancerizer.INSTANCE.getConfig().getData().getServer().getTauntCooldown()) {
                 PlayerAnimationCallback.EVENT.invoker().interact(
                         this,
                         new PlayerAnimationStatus(
@@ -150,15 +146,15 @@ public abstract class AnimationsForPlayerMixin extends LivingEntity implements E
     public void dancerizer$setTaunt(@NotNull String taunt, boolean force) {
         InteractionResult result = PlayerAnimationCallback.EVENT.invoker().interact(
                 this,
-                new PlayerAnimationStatus(PlayerAnimationStatus.TYPE.TAUNTING, 5, taunt) // TODO: Duration configurable
+                new PlayerAnimationStatus(PlayerAnimationStatus.TYPE.TAUNTING, Dancerizer.INSTANCE.getConfig().getData().getServer().getTauntDuration(), taunt)
         );
         if (result == InteractionResult.FAIL)
             return;
 
         if (this.dancerizer$tauntCooldown <= 0 || force) {
-            this.entityData.set(DATA_PLAYER_TAUNTING, 5);
+            this.entityData.set(DATA_PLAYER_TAUNTING, Dancerizer.INSTANCE.getConfig().getData().getServer().getTauntDuration());
             this.entityData.set(DATA_PLAYER_POSE_ANIMATION, taunt);
-            this.dancerizer$tauntCooldown = TAUNT_COOLDOWN;
+            this.dancerizer$tauntCooldown = Dancerizer.INSTANCE.getConfig().getData().getServer().getTauntCooldown();
 
             if (!level().isClientSide()) {
                 level().playSound(

@@ -38,6 +38,12 @@
 				"value": "dev.kleinbox.dancerizer.DancerizerClient",
 				"adapter": "kotlin"
 			}
+		],
+		"modmenu": [
+			{
+				"value": "dev.kleinbox.dancerizer.client.config.ModMenuImpl",
+				"adapter": "kotlin"
+			}
 		]
 	},
 	"mixins": [

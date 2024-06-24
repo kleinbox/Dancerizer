@@ -24,7 +24,7 @@ public class HumanoidModelMixin<T extends LivingEntity> {
     @Shadow @Final public ModelPart leftLeg;
 
     @Inject(method = "setupAnim(Lnet/minecraft/world/entity/LivingEntity;FFFFF)V", at = @At("HEAD"), cancellable = true)
-    public void setupAnim(T livingEntity, float f, float g, float h, float i, float j, CallbackInfo ci) {
+    public void dancerizer$setupAnim(T livingEntity, float f, float g, float h, float i, float j, CallbackInfo ci) {
         if (livingEntity instanceof ExpressivePlayer player) {
             // TODO Don't animate when player is not standing still
 

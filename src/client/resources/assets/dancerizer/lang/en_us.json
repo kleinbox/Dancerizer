@@ -26,6 +26,9 @@
   "info.dancerizer.missing_taunt": "You cannot use a taunt without the appropriate equipment",
   "info.dancerizer.missing_dance": "You cannot perform a dance without the appropriate equipment",
 
+  "dancerizer.options.button.toggle_hints": "Toggle Hints",
+  "dancerizer.options.button.toggle_hints.tooltip": "Determines when a message should be shown after hitting a dance or taunt hotkey without success.",
+
   "stat.dancerizer.taunt": "Used Taunts",
 
   "itemGroup.dancerizer": "Dancerizer",

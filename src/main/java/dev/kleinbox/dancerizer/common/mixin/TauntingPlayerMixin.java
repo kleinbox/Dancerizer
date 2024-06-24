@@ -25,7 +25,7 @@ public abstract class TauntingPlayerMixin extends LivingEntity {
     }
 
     @Inject(method = "hurt", at = @At("HEAD"), cancellable = true)
-    public void hurt(DamageSource damageSource, float f, CallbackInfoReturnable<Boolean> cir) {
+    public void dancerizer$hurt(DamageSource damageSource, float f, CallbackInfoReturnable<Boolean> cir) {
         ExpressivePlayer player = (ExpressivePlayer) this;
         List<ItemStack> taunts = GroovingTrinket.Companion.gatherItemWithTaunt(player).stream().toList();
         float chance = (100f / 5) * taunts.size() - 10;

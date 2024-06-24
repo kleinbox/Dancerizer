@@ -66,12 +66,12 @@ class HumanoidPoseManipulator(name: String, path: String, data: JsonObject) {
         }
     }
 
-    // TODO Getters
+    // TODO("Not yet implemented")
     private val loop: Loop = Loop.fromJSON(data["loop"]?.jsonPrimitive?.content.toString())
     val length: Float = runCatching { (data["animation_length"] ?: Json.decodeFromString("0")).jsonPrimitive.float }
         .getOrElse { throw IllegalArgumentException("field 'animation_length' is invalid $MOLANG_NOTICE") }
 
-    // TODO Currently not used
+    // TODO("Not yet implemented")
     private val delayStart: Float = runCatching { (data["start_delay"] ?: Json.decodeFromString("0")).jsonPrimitive.float }
         .getOrElse { throw IllegalArgumentException("field 'start_delay' is invalid $MOLANG_NOTICE") }
     private val delayLoop: Float =  runCatching { (data["loop_delay"] ?: Json.decodeFromString("0")).jsonPrimitive.float }

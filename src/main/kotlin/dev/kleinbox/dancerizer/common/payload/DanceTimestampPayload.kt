@@ -31,7 +31,7 @@ object DanceTimestampPayload : Payloads.CustomPayload<DanceTimestampPayload>() {
 
         context.player().server.execute {
             val player = context.player() as ServerPlayer
-            if ((player as ExpressivePlayer).`dancerizer$isTaunting`() > 0)
+            if ((player as ExpressivePlayer).`dancerizer$isTaunting`() > 1 || (player as ExpressivePlayer).`dancerizer$isDancePlaying`() > 0)
                 return@execute
 
             val dances = GroovingTrinket.gatherItemWithDance(player)
