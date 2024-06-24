@@ -60,9 +60,6 @@
 		"fabric-api": "~${fabricapi}",
 		"fabric-language-kotlin": "~${fabriclanguagekotlin}"
 	},
-	"recommends": {
-		"confetti": "~${confetti}"
-	},
 	"suggests": {
 		"modmenu": "*"
 	}

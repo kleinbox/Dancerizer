@@ -32,7 +32,6 @@ object Constants {
 	// Mod Dependencies
 	const val FABRIC_VERSION = "0.100.1+1.21"
 	const val MODMENU_VERSION = "11.0.0-beta.1"
-	const val CONFETTI_VERSION = "1.0.0+1.21"
 	const val SODIUM_VERSION = "mc1.20.1-0.5.10"
 
 	// Runtime only
@@ -105,7 +104,6 @@ tasks.processResources {
 			"minecraft" to Constants.MINECRAFT_VERSION,
 			"fabricapi" to Constants.FABRIC_VERSION,
 			"fabriclanguagekotlin" to Constants.KOTLIN_VERSION,
-			"confetti" to Constants.CONFETTI_VERSION,
 
 			"modid" to Constants.MODID,
 			"version" to Constants.VERSION,
