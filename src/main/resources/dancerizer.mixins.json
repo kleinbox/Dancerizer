@@ -4,7 +4,7 @@
   "compatibilityLevel": "JAVA_21",
   "mixins": [
     "AnimationsForPlayerMixin",
-    "TauntingPlayerMixin"
+    "AutoTauntingPlayerMixin"
   ],
   "injectors": {
     "defaultRequire": 1

@@ -2,7 +2,7 @@ import java.time.LocalDate
 
 object Constants {
 	// Mod Properties
-	const val VERSION = "1.0.0"
+	const val VERSION = "1.0.1"
 	const val GROUP = "dev.kleinbox"
 	const val MODID = "dancerizer"
 
@@ -32,7 +32,7 @@ object Constants {
 	// Mod Dependencies
 	const val FABRIC_VERSION = "0.100.1+1.21"
 	const val MODMENU_VERSION = "11.0.0-beta.1"
-	const val SODIUM_VERSION = "mc1.20.1-0.5.10"
+	const val SODIUM_VERSION = "mc1.21-0.5.9"
 
 	// Runtime only
 	const val COMPONENTVIEWER_VERSION = "1.1.2+1.21"
