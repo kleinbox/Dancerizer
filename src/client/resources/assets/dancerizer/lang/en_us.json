@@ -22,6 +22,7 @@
 
   "dancerizer.keybind.taunt": "Perform Taunt",
   "dancerizer.keybind.dance": "Perform Dance",
+  "key.categories.dancerizer": "Dancerizer",
 
   "info.dancerizer.missing_taunt": "You cannot use a taunt without the appropriate equipment",
   "info.dancerizer.missing_dance": "You cannot perform a dance without the appropriate equipment",

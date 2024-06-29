@@ -35,6 +35,7 @@ public abstract class AttachedCapeModelMixin<T extends LivingEntity> extends Hum
             cloak.yRot = body.yRot;
             cloak.zRot = -body.zRot;
             cloak.x = -body.x;
+            cloak.y = body.y;
             cloak.z = -body.z;
             expressivePlayer.dancerizer$setWasDancingOrTaunting(true);
         }
