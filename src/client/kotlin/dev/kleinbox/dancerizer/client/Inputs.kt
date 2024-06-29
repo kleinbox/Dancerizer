@@ -23,13 +23,14 @@ import org.lwjgl.glfw.GLFW
  */
 @Suppress("unused")
 object Inputs {
+    private const val DANCERIZER_CATEGORY = "key.categories.dancerizer"
     private val actions = HashMap<KeyMapping, (client: Minecraft) -> Unit>()
 
     val dance = action(KeyBindingHelper.registerKeyBinding(KeyMapping(
         "$MODID.keybind.dance",
         InputConstants.Type.KEYSYM,
         GLFW.GLFW_KEY_Y,
-        CATEGORY_MULTIPLAYER
+        DANCERIZER_CATEGORY
     ))!!) { client: Minecraft ->
 
         if (isNotInWorld(client))
@@ -50,7 +51,7 @@ object Inputs {
         "$MODID.keybind.taunt",
         InputConstants.Type.KEYSYM,
         GLFW.GLFW_KEY_G,
-        CATEGORY_GAMEPLAY
+        DANCERIZER_CATEGORY
     ))!!) { client: Minecraft ->
 
         if (isNotInWorld(client))

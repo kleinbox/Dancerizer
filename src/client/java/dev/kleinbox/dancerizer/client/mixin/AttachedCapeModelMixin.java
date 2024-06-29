@@ -22,10 +22,33 @@ public abstract class AttachedCapeModelMixin<T extends LivingEntity> extends Hum
 
     @Inject(method = "setupAnim(Lnet/minecraft/world/entity/LivingEntity;FFFFF)V", at = @At("TAIL"))
     public void dancerizer$AttachCape(T livingEntity, float f, float g, float h, float i, float j, CallbackInfo ci) {
-        cloak.visible = true;
-        if (livingEntity instanceof ExpressivePlayer player) {
-            // TODO ("Render cape properly in future")
-            cloak.visible = !(player.dancerizer$isDancePlaying() > 1 || player.dancerizer$isTaunting() > 1);
+        if (!cloak.visible) {
+            return;
+        }
+        if (!(livingEntity instanceof ExpressivePlayer expressivePlayer)) {
+            return;
+        }
+        boolean dancingOrTaunting = (expressivePlayer.dancerizer$isDancePlaying() > 1 || expressivePlayer.dancerizer$isTaunting() > 1);
+        if (dancingOrTaunting) {
+            // get cloak to align with body
+            cloak.xRot = -body.xRot;
+            cloak.yRot = body.yRot;
+            cloak.zRot = -body.zRot;
+            cloak.x = -body.x;
+            cloak.y = body.y;
+            cloak.z = -body.z;
+            expressivePlayer.dancerizer$setWasDancingOrTaunting(true);
+        }
+        boolean wasDancingOrTaunting = expressivePlayer.dancerizer$wasDancingOrTaunting();
+        if (wasDancingOrTaunting && !dancingOrTaunting) {
+            // reset cloak after dance finished
+            cloak.xRot = 0;
+            cloak.yRot = 0;
+            cloak.zRot = 0;
+            cloak.x = 0;
+            cloak.y = 0;
+            cloak.z = 0;
+            expressivePlayer.dancerizer$setWasDancingOrTaunting(false);
         }
     }
 }
