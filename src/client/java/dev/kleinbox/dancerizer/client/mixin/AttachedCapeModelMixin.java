@@ -28,13 +28,26 @@ public abstract class AttachedCapeModelMixin<T extends LivingEntity> extends Hum
         if (!(livingEntity instanceof ExpressivePlayer expressivePlayer)) {
             return;
         }
-        if (!(expressivePlayer.dancerizer$isDancePlaying() > 1 || expressivePlayer.dancerizer$isTaunting() > 1)) {
-            return;
+        boolean dancingOrTaunting = (expressivePlayer.dancerizer$isDancePlaying() > 1 || expressivePlayer.dancerizer$isTaunting() > 1);
+        if (dancingOrTaunting) {
+            // get cloak to align with body
+            cloak.xRot = -body.xRot;
+            cloak.yRot = body.yRot;
+            cloak.zRot = -body.zRot;
+            cloak.x = -body.x;
+            cloak.z = -body.z;
+            expressivePlayer.dancerizer$setWasDancingOrTaunting(true);
         }
-        cloak.xRot = -body.xRot;
-        cloak.yRot = body.yRot;
-        cloak.zRot = -body.zRot;
-        cloak.x = -body.x;
-        cloak.z = -body.z;
+        boolean wasDancingOrTaunting = expressivePlayer.dancerizer$wasDancingOrTaunting();
+        if (wasDancingOrTaunting && !dancingOrTaunting) {
+            // reset cloak after dance finished
+            cloak.xRot = 0;
+            cloak.yRot = 0;
+            cloak.zRot = 0;
+            cloak.x = 0;
+            cloak.y = 0;
+            cloak.z = 0;
+            expressivePlayer.dancerizer$setWasDancingOrTaunting(false);
+        }
     }
 }

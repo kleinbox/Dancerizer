@@ -21,4 +21,7 @@ public interface ExpressivePlayer {
     void dancerizer$setDancePlaying(int duration);
 
     String dancerizer$getAnimationPose();
+
+    boolean dancerizer$wasDancingOrTaunting();
+    void dancerizer$setWasDancingOrTaunting(boolean value);
 }

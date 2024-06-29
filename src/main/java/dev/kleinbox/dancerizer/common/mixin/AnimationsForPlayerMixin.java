@@ -39,6 +39,8 @@ public abstract class AnimationsForPlayerMixin extends LivingEntity implements E
 
     @Shadow @Final Inventory inventory;
     @Unique private short dancerizer$tauntCooldown = 0;
+    @Unique
+    private boolean wasDancingOrTaunting = false;
     @SuppressWarnings("WrongEntityDataParameterClass")
     @Unique private static final EntityDataAccessor<Integer> DATA_PLAYER_TAUNTING
             = SynchedEntityData.defineId(Player.class, EntityDataSerializers.INT);
@@ -190,5 +192,15 @@ public abstract class AnimationsForPlayerMixin extends LivingEntity implements E
     @Override
     public int dancerizer$isDancePlaying() {
         return this.entityData.get(DATA_PLAYER_DANCE_DURATION);
+    }
+
+    @Override
+    public boolean dancerizer$wasDancingOrTaunting() {
+        return this.wasDancingOrTaunting;
+    }
+
+    @Override
+    public void dancerizer$setWasDancingOrTaunting(boolean value) {
+        this.wasDancingOrTaunting = value;
     }
 }
