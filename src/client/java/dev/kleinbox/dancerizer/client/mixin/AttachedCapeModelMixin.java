@@ -22,10 +22,19 @@ public abstract class AttachedCapeModelMixin<T extends LivingEntity> extends Hum
 
     @Inject(method = "setupAnim(Lnet/minecraft/world/entity/LivingEntity;FFFFF)V", at = @At("TAIL"))
     public void dancerizer$AttachCape(T livingEntity, float f, float g, float h, float i, float j, CallbackInfo ci) {
-        cloak.visible = true;
-        if (livingEntity instanceof ExpressivePlayer player) {
-            // TODO ("Render cape properly in future")
-            cloak.visible = !(player.dancerizer$isDancePlaying() > 1 || player.dancerizer$isTaunting() > 1);
+        if (!cloak.visible) {
+            return;
         }
+        if (!(livingEntity instanceof ExpressivePlayer expressivePlayer)) {
+            return;
+        }
+        if (!(expressivePlayer.dancerizer$isDancePlaying() > 1 || expressivePlayer.dancerizer$isTaunting() > 1)) {
+            return;
+        }
+        cloak.xRot = -body.xRot;
+        cloak.yRot = body.yRot;
+        cloak.zRot = -body.zRot;
+        cloak.x = -body.x;
+        cloak.z = -body.z;
     }
 }
