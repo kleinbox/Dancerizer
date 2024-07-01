@@ -7,6 +7,7 @@ import dev.kleinbox.dancerizer.common.SoundEvents;
 import dev.kleinbox.dancerizer.common.Statistics;
 import dev.kleinbox.dancerizer.common.api.PlayerAnimationCallback;
 import dev.kleinbox.dancerizer.common.api.PlayerAnimationStatus;
+import dev.kleinbox.dancerizer.common.item.GroovingTrinket;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
@@ -84,6 +85,15 @@ public abstract class AnimationsForPlayerMixin extends LivingEntity implements E
 
     @Inject(method = "tick", at = @At("HEAD"))
     public void dancerizer$tick(CallbackInfo ci) {
+        boolean valid = GroovingTrinket.Companion.hasSpecificAnimation(dancerizer$getAnimationPose(), this);
+        if (!valid) {
+            this.entityData.set(DATA_PLAYER_DANCE_TIMESTAMP, 0L);
+            this.entityData.set(DATA_PLAYER_TAUNTING, 0);
+            this.entityData.set(DATA_PLAYER_POSE_ANIMATION, "");
+            this.entityData.set(DATA_PLAYER_DANCE_DURATION, 0);
+            return;
+        }
+
         int taunt = dancerizer$isTaunting();
         if (taunt <= 0) {
             if (this.dancerizer$tauntCooldown == Dancerizer.INSTANCE.getConfig().getData().getServer().getTauntCooldown()) {

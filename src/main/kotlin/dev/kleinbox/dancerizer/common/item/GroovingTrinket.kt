@@ -73,6 +73,20 @@ class GroovingTrinket(
         fun gatherItemWithDance(player: ExpressivePlayer) = filterItemsWithComponent(player, Components.DANCE)
         fun gatherItemWithTaunt(player: ExpressivePlayer) = filterItemsWithComponent(player, Components.TAUNT)
 
+        fun hasSpecificAnimation(key: String, player: ExpressivePlayer): Boolean {
+            val items = gatherItemWithTaunt(player)
+            items.addAll(gatherItemWithDance(player))
+
+            items.filter {
+                val dance = it.components.get(Components.DANCE)
+                val taunt = it.components.get(Components.TAUNT)
+
+                (dance != null && dance.first == key) || (taunt != null && taunt == key)
+            }
+
+            return items.size > 0
+        }
+
         private fun filterItemsWithComponent(player: ExpressivePlayer, component: DataComponentType<out Any>): MutableSet<ItemStack> {
             val items: MutableSet<ItemStack> = mutableSetOf()
 
