@@ -2,6 +2,7 @@ package dev.kleinbox.dancerizer
 
 import dev.kleinbox.dancerizer.common.*
 import dev.kleinbox.dancerizer.common.Config
+import dev.kleinbox.dancerizer.common.item.ItemCategories
 import dev.kleinbox.dancerizer.common.item.Items
 import dev.kleinbox.dancerizer.common.payload.Payloads
 import net.fabricmc.api.ModInitializer
@@ -23,5 +24,6 @@ object Dancerizer : ModInitializer {
 		Components
 		Items
 		ItemCategories
+		LootTableModifier
 	}
 }

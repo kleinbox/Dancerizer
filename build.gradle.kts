@@ -53,6 +53,8 @@ base {
 loom {
 	splitEnvironmentSourceSets()
 
+	accessWidenerPath = file("src/main/resources/${Constants.MODID}.accesswidener")
+
 	mods {
 		register(Constants.MODID) {
 			sourceSet(sourceSets["main"])
