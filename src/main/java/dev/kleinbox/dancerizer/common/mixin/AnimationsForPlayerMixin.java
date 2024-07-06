@@ -85,11 +85,15 @@ public abstract class AnimationsForPlayerMixin extends LivingEntity implements E
 
     @Inject(method = "tick", at = @At("HEAD"))
     public void dancerizer$tick(CallbackInfo ci) {
-        boolean valid = GroovingTrinket.Companion.hasSpecificAnimation(dancerizer$getAnimationPose(), this);
+        String pose = dancerizer$getAnimationPose();
+        boolean valid = GroovingTrinket.Companion.hasSpecificAnimation(pose, this);
         if (!valid) {
             dancerizer$reset();
             return;
         }
+
+        if (!pose.isEmpty() && this.entityData.get(DATA_PLAYER_DANCE_TIMESTAMP) < 0)
+            this.entityData.set(DATA_PLAYER_DANCE_TIMESTAMP, System.currentTimeMillis());
 
         int taunt = dancerizer$isTaunting();
         if (taunt <= 0) {
@@ -99,7 +103,7 @@ public abstract class AnimationsForPlayerMixin extends LivingEntity implements E
                         new PlayerAnimationStatus(
                                 PlayerAnimationStatus.TYPE.TAUNTING,
                                 0,
-                                dancerizer$getAnimationPose()
+                                pose
                         )
                 );
                 this.entityData.set(DATA_PLAYER_POSE_ANIMATION, "");
@@ -122,7 +126,7 @@ public abstract class AnimationsForPlayerMixin extends LivingEntity implements E
                         new PlayerAnimationStatus(
                                 PlayerAnimationStatus.TYPE.DANCING,
                                 0,
-                                dancerizer$getAnimationPose()
+                                pose
                         )
                 );
                 this.entityData.set(DATA_PLAYER_POSE_ANIMATION, "");
