@@ -5,6 +5,11 @@ import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.item.ItemStack;
 import org.jetbrains.annotations.NotNull;
 
+/**
+ * Interface used for actions specific to player animations.
+ *
+ * Using this for anything but players results in a crash.
+ */
 @SuppressWarnings("unused")
 public interface ExpressivePlayer {
 
