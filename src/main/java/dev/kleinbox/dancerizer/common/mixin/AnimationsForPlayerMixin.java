@@ -87,10 +87,7 @@ public abstract class AnimationsForPlayerMixin extends LivingEntity implements E
     public void dancerizer$tick(CallbackInfo ci) {
         boolean valid = GroovingTrinket.Companion.hasSpecificAnimation(dancerizer$getAnimationPose(), this);
         if (!valid) {
-            this.entityData.set(DATA_PLAYER_DANCE_TIMESTAMP, 0L);
-            this.entityData.set(DATA_PLAYER_TAUNTING, 0);
-            this.entityData.set(DATA_PLAYER_POSE_ANIMATION, "");
-            this.entityData.set(DATA_PLAYER_DANCE_DURATION, 0);
+            dancerizer$reset();
             return;
         }
 
@@ -131,6 +128,15 @@ public abstract class AnimationsForPlayerMixin extends LivingEntity implements E
                 this.entityData.set(DATA_PLAYER_POSE_ANIMATION, "");
             }
         }
+    }
+
+    @Override
+    public void dancerizer$reset() {
+        this.entityData.set(DATA_PLAYER_DANCE_TIMESTAMP, 0L);
+        this.entityData.set(DATA_PLAYER_TAUNTING, 0);
+        this.entityData.set(DATA_PLAYER_POSE_ANIMATION, "");
+        this.entityData.set(DATA_PLAYER_DANCE_DURATION, 0);
+        this.dancerizer$tauntCooldown = 0;
     }
 
     @Override

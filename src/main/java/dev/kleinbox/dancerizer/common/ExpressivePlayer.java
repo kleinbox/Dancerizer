@@ -24,4 +24,6 @@ public interface ExpressivePlayer {
 
     boolean dancerizer$wasDancingOrTaunting();
     void dancerizer$setWasDancingOrTaunting(boolean value);
+
+    void dancerizer$reset();
 }

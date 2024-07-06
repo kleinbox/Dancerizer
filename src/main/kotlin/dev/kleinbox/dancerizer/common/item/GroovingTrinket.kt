@@ -1,5 +1,6 @@
 package dev.kleinbox.dancerizer.common.item
 
+import dev.kleinbox.dancerizer.Dancerizer.logger
 import dev.kleinbox.dancerizer.common.Components
 import dev.kleinbox.dancerizer.common.ExpressivePlayer
 import net.fabricmc.api.EnvType
@@ -77,14 +78,14 @@ class GroovingTrinket(
             val items = gatherItemWithTaunt(player)
             items.addAll(gatherItemWithDance(player))
 
-            items.filter {
+            val filtered = items.filter {
                 val dance = it.components.get(Components.DANCE)
                 val taunt = it.components.get(Components.TAUNT)
 
                 (dance != null && dance.first == key) || (taunt != null && taunt == key)
             }
 
-            return items.size > 0
+            return filtered.isNotEmpty()
         }
 
         private fun filterItemsWithComponent(player: ExpressivePlayer, component: DataComponentType<out Any>): MutableSet<ItemStack> {

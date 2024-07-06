@@ -36,6 +36,7 @@ public abstract class AutoTauntingPlayerMixin extends LivingEntity {
             if (itemStack != null) {
                 String taunt = itemStack.getComponents().get(Components.INSTANCE.getTAUNT());
                 if (taunt != null) {
+                    player.dancerizer$reset();
                     player.dancerizer$setTaunt(taunt, true);
                     cir.setReturnValue(false);
                     cir.cancel();
