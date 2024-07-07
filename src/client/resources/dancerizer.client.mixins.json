@@ -3,7 +3,6 @@
   "package": "dev.kleinbox.dancerizer.client.mixin",
   "compatibilityLevel": "JAVA_21",
   "client": [
-    "AttachedCapeModelMixin",
     "HumanoidModelMixin",
     "PreventMessageGuiMixin"
   ],

@@ -4,15 +4,14 @@ import dev.kleinbox.dancerizer.client.animation.Animations;
 import dev.kleinbox.dancerizer.client.animation.HumanoidPoseManipulator;
 import dev.kleinbox.dancerizer.client.animation.PoseModifier;
 import dev.kleinbox.dancerizer.common.ExpressivePlayer;
-import net.minecraft.client.model.AgeableListModel;
-import net.minecraft.client.model.ArmedModel;
-import net.minecraft.client.model.HeadedModel;
-import net.minecraft.client.model.HumanoidModel;
+import net.minecraft.client.model.*;
 import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.world.entity.LivingEntity;
+import org.jetbrains.annotations.Nullable;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
+import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
@@ -33,6 +32,10 @@ public abstract class HumanoidModelMixin<T extends LivingEntity> extends Ageable
             // Check for valid playing animation
             String anim_type = player.dancerizer$getAnimationPose();
 
+            ModelPart cloak = null;
+            if ((Object) this instanceof PlayerModel<?> actualPlayerModel)
+                cloak = actualPlayerModel.cloak;
+
             if (!anim_type.isBlank() && Animations.INSTANCE.getPoses().containsKey(anim_type)) {
                 HumanoidPoseManipulator animation = Animations.INSTANCE.getPoses().get(anim_type);
 
@@ -40,6 +43,7 @@ public abstract class HumanoidModelMixin<T extends LivingEntity> extends Ageable
                     // Is taunting
                     animation.apply(0, 0, head, body, leftArm, rightArm, leftLeg, rightLeg);
                     hat.copyFrom(head);
+                    setCloak(cloak, player);
 
                     ci.cancel();
                 } else if (player.dancerizer$isDancePlaying() > 0) {
@@ -50,17 +54,47 @@ public abstract class HumanoidModelMixin<T extends LivingEntity> extends Ageable
                         // is dancing
                         animation.apply(timestamp, time, head, body, leftArm, rightArm, leftLeg, rightLeg);
                         hat.copyFrom(head);
+                        setCloak(cloak, player);
 
                         ci.cancel();
                     }
                 } else {
                     PoseModifier.INSTANCE.reset(head, body, leftArm, rightArm, leftLeg, rightLeg);
                     hat.copyFrom(head);
+                    resetCloak(cloak, player);
                 }
             } else {
                 PoseModifier.INSTANCE.reset(head, body, leftArm, rightArm, leftLeg, rightLeg);
                 hat.copyFrom(head);
+                resetCloak(cloak, player);
             }
         }
+    }
+
+    @Unique
+    private void setCloak(@Nullable ModelPart cloak, ExpressivePlayer player) {
+        if (cloak == null)
+            return;
+
+        cloak.xRot = -body.xRot;
+        cloak.yRot = body.yRot;
+        cloak.zRot = -body.zRot;
+        cloak.x = -body.x;
+        cloak.y = body.y;
+        cloak.z = -body.z;
+    }
+
+    @Unique
+    private void resetCloak(@Nullable ModelPart cloak, ExpressivePlayer player) {
+        if (cloak == null)
+            return;
+
+        cloak.xRot = 0;
+        cloak.yRot = 0;
+        cloak.zRot = 0;
+        cloak.x = 0;
+        cloak.y = 0;
+        cloak.z = 0;
+
     }
 }
