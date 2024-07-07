@@ -16,13 +16,13 @@ object Dancerizer : ModInitializer {
 	val logger: Logger = LoggerFactory.getLogger(MODID.replaceFirstChar { it.uppercaseChar() })
 
 	var config = Config()
-	var confetti_emitter = if (FabricLoader.getInstance().isModLoaded("confetti"))
-		ConfettiEmitterImplementation
-	else
-		ConfettiEmitter.Companion.Dummy
+	var confetti_emitter: ConfettiEmitter = ConfettiEmitter.Companion.Dummy
 
 	override fun onInitialize() {
 		logger.info("Preparing the dance floor!")
+
+		if (FabricLoader.getInstance().isModLoaded("confetti"))
+			confetti_emitter = ConfettiEmitterImplementation
 
 		Payloads
 		SoundEvents

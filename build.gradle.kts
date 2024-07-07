@@ -91,14 +91,16 @@ dependencies {
 	modApi("maven.modrinth","modmenu", Constants.MODMENU_VERSION)
 	modApi("maven.modrinth", "confetti-lib", Constants.CONFETTI_VERSION)
 
-	modLocalRuntime("maven.modrinth", "component-viewer", Constants.COMPONENTVIEWER_VERSION)
-	modLocalRuntime("maven.modrinth", "sodium", Constants.SODIUM_VERSION)
-	modLocalRuntime("maven.modrinth","modmenu", Constants.MODMENU_VERSION)
-	modLocalRuntime("maven.modrinth", "confetti-lib", Constants.CONFETTI_VERSION)
 
 	implementation("org.jetbrains.kotlinx", "kotlinx-serialization-json", Constants.JSON_VERSION)
 	implementation("net.peanuuutz.tomlkt", "tomlkt", Constants.TOML_VERSION)
 	include("net.peanuuutz.tomlkt", "tomlkt", Constants.TOML_VERSION)
+
+	// Runtime only
+	modLocalRuntime("maven.modrinth", "component-viewer", Constants.COMPONENTVIEWER_VERSION)
+	modLocalRuntime("maven.modrinth", "sodium", Constants.SODIUM_VERSION)
+	modLocalRuntime("maven.modrinth","modmenu", Constants.MODMENU_VERSION)
+	modLocalRuntime("maven.modrinth", "confetti-lib", Constants.CONFETTI_VERSION)
 }
 
 tasks.processResources {

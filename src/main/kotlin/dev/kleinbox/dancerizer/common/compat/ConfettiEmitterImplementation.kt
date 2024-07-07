@@ -3,12 +3,18 @@ package dev.kleinbox.dancerizer.common.compat
 import dev.doublekekse.confetti.Confetti
 import dev.doublekekse.confetti.math.Vec3Dist
 import dev.doublekekse.confetti.packet.ExtendedParticlePacket
+import dev.kleinbox.dancerizer.Dancerizer.logger
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking
 import net.minecraft.server.level.ServerPlayer
 import net.minecraft.world.phys.Vec3
 
 
 object ConfettiEmitterImplementation : ConfettiEmitter {
+
+    init {
+        logger.info("Found Confetti-Lib, making use of that")
+    }
+
     override fun particlePop(player: ServerPlayer) {
         ServerPlayNetworking.send(
             player,
