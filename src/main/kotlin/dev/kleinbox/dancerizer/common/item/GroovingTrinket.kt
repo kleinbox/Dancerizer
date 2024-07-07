@@ -1,11 +1,9 @@
 package dev.kleinbox.dancerizer.common.item
 
-import dev.kleinbox.dancerizer.Dancerizer.logger
 import dev.kleinbox.dancerizer.common.Components
 import dev.kleinbox.dancerizer.common.ExpressivePlayer
 import net.fabricmc.api.EnvType
 import net.fabricmc.api.Environment
-import net.fabricmc.fabric.api.item.v1.EquipmentSlotProvider
 import net.minecraft.ChatFormatting
 import net.minecraft.core.Holder
 import net.minecraft.core.component.DataComponentType

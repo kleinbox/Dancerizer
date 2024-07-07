@@ -1,6 +1,7 @@
 package dev.kleinbox.dancerizer.common.payload
 
 import dev.kleinbox.dancerizer.Dancerizer.MODID
+import dev.kleinbox.dancerizer.Dancerizer.confetti_emitter
 import dev.kleinbox.dancerizer.common.Components
 import dev.kleinbox.dancerizer.common.ExpressivePlayer
 import dev.kleinbox.dancerizer.common.item.GroovingTrinket
@@ -8,7 +9,6 @@ import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking.Context
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking.PlayPayloadHandler
 import net.minecraft.network.FriendlyByteBuf
 import net.minecraft.network.chat.Component
-import net.minecraft.network.chat.MutableComponent
 import net.minecraft.network.codec.StreamCodec
 import net.minecraft.network.protocol.common.custom.CustomPacketPayload
 import net.minecraft.resources.ResourceLocation.fromNamespaceAndPath
@@ -37,6 +37,7 @@ object TauntPayload : Payloads.CustomPayload<TauntPayload>() {
             if (taunts.isNotEmpty()) {
                 val taunt = taunts.random().components.get(Components.TAUNT)!!
                 (player as ExpressivePlayer).`dancerizer$setTaunt`(taunt, false)
+                confetti_emitter.particlePop(player)
             } else
                 player.displayClientMessage(Component.translatable("info.$MODID.missing_taunt"), true)
         }

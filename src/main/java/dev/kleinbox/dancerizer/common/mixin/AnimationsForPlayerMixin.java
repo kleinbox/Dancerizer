@@ -13,6 +13,7 @@ import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.EntityType;
@@ -118,6 +119,10 @@ public abstract class AnimationsForPlayerMixin extends LivingEntity implements E
         int duration = dancerizer$isDancePlaying();
         if (duration >= 1) {
             this.awardStat(Statistics.INSTANCE.getDANCE());
+            if (!level().isClientSide)
+                //noinspection DataFlowIssue
+                Dancerizer.INSTANCE.getConfetti_emitter().particleRain((ServerPlayer) (Object) this);
+
             duration--;
             dancerizer$setDancePlaying(duration);
             if (duration == 0) {

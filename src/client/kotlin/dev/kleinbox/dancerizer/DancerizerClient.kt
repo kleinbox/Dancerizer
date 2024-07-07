@@ -6,9 +6,6 @@ import dev.kleinbox.dancerizer.client.renderer.GroovingEquipmentRenderer
 import dev.kleinbox.dancerizer.common.item.Items
 import net.fabricmc.api.ClientModInitializer
 import net.fabricmc.fabric.api.client.rendering.v1.ArmorRenderer
-import net.fabricmc.fabric.api.client.rendering.v1.HudRenderCallback
-import net.minecraft.client.DeltaTracker
-import net.minecraft.client.gui.GuiGraphics
 
 /**
  * Initializes client side only stuff.

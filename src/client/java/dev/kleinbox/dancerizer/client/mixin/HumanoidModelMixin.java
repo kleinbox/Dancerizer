@@ -1,16 +1,15 @@
 package dev.kleinbox.dancerizer.client.mixin;
 
-import dev.kleinbox.dancerizer.Dancerizer;
 import dev.kleinbox.dancerizer.client.animation.Animations;
 import dev.kleinbox.dancerizer.client.animation.HumanoidPoseManipulator;
 import dev.kleinbox.dancerizer.client.animation.PoseModifier;
 import dev.kleinbox.dancerizer.common.ExpressivePlayer;
-import net.fabricmc.fabric.api.client.rendering.v1.LivingEntityFeatureRenderEvents;
-import net.minecraft.client.model.*;
+import net.minecraft.client.model.AgeableListModel;
+import net.minecraft.client.model.ArmedModel;
+import net.minecraft.client.model.HeadedModel;
+import net.minecraft.client.model.HumanoidModel;
 import net.minecraft.client.model.geom.ModelPart;
-import net.minecraft.client.player.AbstractClientPlayer;
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.player.Player;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;

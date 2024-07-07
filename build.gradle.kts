@@ -33,6 +33,7 @@ object Constants {
 	const val FABRIC_VERSION = "0.100.1+1.21"
 	const val MODMENU_VERSION = "11.0.0-beta.1"
 	const val SODIUM_VERSION = "mc1.21-0.5.9"
+	const val CONFETTI_VERSION = "1.2.0+1.21"
 
 	// Runtime only
 	const val COMPONENTVIEWER_VERSION = "1.1.2+1.21"
@@ -86,11 +87,14 @@ dependencies {
 
 	modImplementation("net.fabricmc.fabric-api", "fabric-api", Constants.FABRIC_VERSION)
 	modImplementation("net.fabricmc", "fabric-language-kotlin", Constants.KOTLIN_VERSION)
+
 	modApi("maven.modrinth","modmenu", Constants.MODMENU_VERSION)
+	modApi("maven.modrinth", "confetti-lib", Constants.CONFETTI_VERSION)
 
 	modLocalRuntime("maven.modrinth", "component-viewer", Constants.COMPONENTVIEWER_VERSION)
+	modLocalRuntime("maven.modrinth", "sodium", Constants.SODIUM_VERSION)
 	modLocalRuntime("maven.modrinth","modmenu", Constants.MODMENU_VERSION)
-	modRuntimeOnly("maven.modrinth", "sodium", Constants.SODIUM_VERSION)
+	modLocalRuntime("maven.modrinth", "confetti-lib", Constants.CONFETTI_VERSION)
 
 	implementation("org.jetbrains.kotlinx", "kotlinx-serialization-json", Constants.JSON_VERSION)
 	implementation("net.peanuuutz.tomlkt", "tomlkt", Constants.TOML_VERSION)
