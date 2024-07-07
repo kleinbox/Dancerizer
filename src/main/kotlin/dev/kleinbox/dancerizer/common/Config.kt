@@ -2,9 +2,7 @@ package dev.kleinbox.dancerizer.common
 
 import dev.kleinbox.dancerizer.Dancerizer.MODID
 import dev.kleinbox.dancerizer.Dancerizer.logger
-import kotlinx.serialization.Serializable
-import kotlinx.serialization.decodeFromString
-import kotlinx.serialization.encodeToString
+import kotlinx.serialization.*
 import net.fabricmc.loader.api.FabricLoader
 import net.peanuuutz.tomlkt.Toml
 import net.peanuuutz.tomlkt.TomlComment
@@ -16,6 +14,7 @@ class Config {
         val DEFAULT = """
             [client]
             showHints = true
+            capeDuringAnimations = true
         
             [server]
             tauntCooldown = 20
@@ -33,7 +32,11 @@ class Config {
                     Whenever a small text should appear after
                     pressing a hotkey related to a taunt or dance
                 """)
-                var showHints: Boolean
+                var showHints: Boolean,
+                @TomlComment("""
+                    Toggles the player cape during animations
+                """)
+                var capeDuringAnimations: Boolean
             )
 
             @Serializable
@@ -53,9 +56,16 @@ class Config {
         }
     }
 
+    private var saveEnv = false
     private var raw = runCatching { LOCATION.readText() }.getOrElse { DEFAULT }
+    @OptIn(ExperimentalSerializationApi::class)
     val data = kotlin.runCatching { toml.decodeFromString<Data>(raw) }.getOrElse {
-        logger.error("Config was invalid; Overwriting with default one!")
+        if (it is MissingFieldException) {
+            logger.warn("The following field${if (it.missingFields.size > 1) "s are" else " is"} missing in the config: ${it.missingFields}; Using default config during this session")
+            saveEnv = true
+        } else {
+            logger.error("Config seems to be invalid; Generating default config")
+        }
         toml.decodeFromString<Data>(DEFAULT)
     }
 
@@ -63,6 +73,7 @@ class Config {
 
     fun overwrite() {
         raw = toml.encodeToString<Data>(data)
-        LOCATION.writeText(raw)
+        if (!saveEnv)
+            LOCATION.writeText(raw)
     }
 }

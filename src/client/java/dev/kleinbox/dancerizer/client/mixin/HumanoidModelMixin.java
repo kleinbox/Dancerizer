@@ -1,5 +1,6 @@
 package dev.kleinbox.dancerizer.client.mixin;
 
+import dev.kleinbox.dancerizer.Dancerizer;
 import dev.kleinbox.dancerizer.client.animation.Animations;
 import dev.kleinbox.dancerizer.client.animation.HumanoidPoseManipulator;
 import dev.kleinbox.dancerizer.client.animation.PoseModifier;
@@ -76,6 +77,11 @@ public abstract class HumanoidModelMixin<T extends LivingEntity> extends Ageable
         if (cloak == null)
             return;
 
+        if (!Dancerizer.INSTANCE.getConfig().getData().getClient().getCapeDuringAnimations()) {
+            cloak.visible = false;
+            return;
+        }
+
         cloak.xRot = -body.xRot;
         cloak.yRot = body.yRot;
         cloak.zRot = -body.zRot;
@@ -88,6 +94,11 @@ public abstract class HumanoidModelMixin<T extends LivingEntity> extends Ageable
     private void resetCloak(@Nullable ModelPart cloak, ExpressivePlayer player) {
         if (cloak == null)
             return;
+
+        if (!Dancerizer.INSTANCE.getConfig().getData().getClient().getCapeDuringAnimations()) {
+            cloak.visible = true;
+            return;
+        }
 
         cloak.xRot = 0;
         cloak.yRot = 0;

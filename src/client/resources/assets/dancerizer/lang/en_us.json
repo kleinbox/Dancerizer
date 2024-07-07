@@ -27,8 +27,12 @@
   "info.dancerizer.missing_taunt": "You cannot use a taunt without the appropriate equipment",
   "info.dancerizer.missing_dance": "You cannot perform a dance without the appropriate equipment",
 
+  "dancerizer.screen.config": "Dancerizer: Visual Settings",
+
   "dancerizer.options.button.toggle_hints": "Toggle Hints",
   "dancerizer.options.button.toggle_hints.tooltip": "Determines when a message should be shown after hitting a dance or taunt hotkey without success.",
+  "dancerizer.options.button.cape_during_animations": "Cape During Animations",
+  "dancerizer.options.button.cape_during_animations.tooltip": "Toggles the visibility of the player cape during animations",
 
   "stat.dancerizer.taunt": "Used Taunts",
   "stat.dancerizer.dance": "Danced for",
