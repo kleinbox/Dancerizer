@@ -1,7 +1,6 @@
 package dev.kleinbox.dancerizer.common.payload
 
 import dev.kleinbox.dancerizer.Dancerizer.MODID
-import dev.kleinbox.dancerizer.Dancerizer.confetti_emitter
 import dev.kleinbox.dancerizer.common.Components
 import dev.kleinbox.dancerizer.common.ExpressivePlayer
 import dev.kleinbox.dancerizer.common.item.GroovingTrinket
@@ -37,7 +36,6 @@ object TauntPayload : Payloads.CustomPayload<TauntPayload>() {
             if (taunts.isNotEmpty()) {
                 val taunt = taunts.random().components.get(Components.TAUNT)!!
                 (player as ExpressivePlayer).`dancerizer$setTaunt`(taunt, false)
-                confetti_emitter.particlePop(player)
             } else
                 player.displayClientMessage(Component.translatable("info.$MODID.missing_taunt"), true)
         }
