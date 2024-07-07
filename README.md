@@ -17,7 +17,7 @@ Because the animations and items triggering the animations are **all data driven
 2. If the animation is done, export it over `Animation -> Export Animations...` to a JSON file. The JSON file needs to be loaded over a Resource Pack. An example can be viewed in the mods [resources folder](./src/client/resources).
     > Note: Non-Linear animations currently do not work within this mod, see [Known Missing Features](#known-missing-features). For now, use the [Bakery plugin](https://www.blockbench.net/plugins/bakery) and export the animations after converting the keyframes with that.
 
-3. For the item triggering the animation, ... _(WIP)_
+3. For the item triggering the animation, any item can be used for that. It only needs to contain the apropiate Component _(`dancerizer:taunt` or `dancerizer:dance`)_. It will behave just like the other taunt or dance items.
 
 ### Known Missing Features
 
