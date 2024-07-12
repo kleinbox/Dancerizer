@@ -2,7 +2,7 @@ import java.time.LocalDate
 
 object Constants {
 	// Mod Properties
-	const val VERSION = "1.2.0"
+	const val VERSION = "1.2.1"
 	const val GROUP = "dev.kleinbox"
 	const val MODID = "dancerizer"
 
