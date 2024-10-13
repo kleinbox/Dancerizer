@@ -12,12 +12,12 @@ With this mod, players can perform taunts and whole dances with new accessories.
 
 Because the animations and items triggering the animations are **all data driven**, custom dances and taunts are possible without actually writing any code by following those steps:
 
-1. In order to create a new animation, first download the **[Player.bbmodel](./Player.bbmodel)** file and open it with [Blockbench](https://www.blockbench.net/). Inside the program, switch to the `Animations` tab _(upper right corner)_ and crate a new animation there.
+1. In order to create a new animation, first download the **[Player.bbmodel](./Player.bbmodel)** file and open it with [Blockbench](https://www.blockbench.net/). Inside the program, switch to the `Animations` tab _(upper right corner)_ and create a new animation there.
 
 2. If the animation is done, export it over `Animation -> Export Animations...` to a JSON file. The JSON file needs to be loaded over a Resource Pack. An example can be viewed in the mods [resources folder](./src/client/resources).
     > Note: Non-Linear animations currently do not work within this mod, see [Known Missing Features](#known-missing-features). For now, use the [Bakery plugin](https://www.blockbench.net/plugins/bakery) and export the animations after converting the keyframes with that.
 
-3. For the item triggering the animation, any item can be used for that. It only needs to contain the apropiate Component _(`dancerizer:taunt` or `dancerizer:dance`)_. It will behave just like the other taunt or dance items.
+3. For the item triggering the animation, any item can be used for that. It only needs to contain the appropiate Component _(`dancerizer:taunt` or `dancerizer:dance`)_. It will behave just like the other taunt or dance items.
 
 ### Known Missing Features
 
