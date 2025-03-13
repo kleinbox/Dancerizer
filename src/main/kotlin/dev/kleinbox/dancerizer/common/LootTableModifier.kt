@@ -2,7 +2,7 @@ package dev.kleinbox.dancerizer.common
 
 import com.google.common.collect.ImmutableList
 import dev.kleinbox.dancerizer.common.item.Items
-import net.fabricmc.fabric.api.loot.v2.LootTableEvents
+import net.fabricmc.fabric.api.loot.v3.LootTableEvents
 import net.minecraft.world.level.storage.loot.BuiltInLootTables
 import net.minecraft.world.level.storage.loot.LootPool
 import net.minecraft.world.level.storage.loot.entries.LootItem
@@ -10,8 +10,8 @@ import net.minecraft.world.level.storage.loot.providers.number.ConstantValue
 
 object LootTableModifier  {
     init {
-        LootTableEvents.MODIFY.register(LootTableEvents.Modify { key, builder, source ->
-            if (source.isBuiltin && key == BuiltInLootTables.TRAIL_RUINS_ARCHAEOLOGY_COMMON) {
+        LootTableEvents.MODIFY.register(LootTableEvents.Modify { resourceKey, builder, lootTableSource, provider ->
+            if (lootTableSource.isBuiltin && resourceKey == BuiltInLootTables.TRAIL_RUINS_ARCHAEOLOGY_COMMON) {
                 val pool = LootPool.lootPool()
                     .setBonusRolls(ConstantValue.exactly(0f))
                     .setRolls(ConstantValue.exactly(1f))

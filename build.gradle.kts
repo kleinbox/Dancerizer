@@ -21,27 +21,28 @@ object Constants {
 	""".trimIndent()
 
 	// Fabric Properties
-	const val MINECRAFT_VERSION = "1.21"
-	const val LOADER_VERSION = "0.15.11"
-	const val KOTLIN_VERSION = "1.11.0+kotlin.2.0.0"
+	const val MINECRAFT_VERSION = "1.21.1"
+	const val LOADER_VERSION = "0.16.10"
+	const val KOTLIN_VERSION = "1.13.1+kotlin.2.1.10"
+	const val PARCHMENT_VERSION = "2024.11.17"
 
 	// Dependencies
 	const val JSON_VERSION = "1.7.0"
 	const val TOML_VERSION = "0.4.0"
 
 	// Mod Dependencies
-	const val FABRIC_VERSION = "0.100.1+1.21"
-	const val MODMENU_VERSION = "11.0.0-beta.1"
-	const val SODIUM_VERSION = "mc1.21-0.5.9"
-	const val CONFETTI_VERSION = "1.2.0+1.21"
+	const val FABRIC_VERSION = "0.115.1+1.21.1"
+	const val MODMENU_VERSION = "11.0.3"
+	const val SODIUM_VERSION = "mc1.21.1-0.6.9-fabric"
+	const val CONFETTI_VERSION = "1.3.3+1.21"
 
 	// Runtime only
-	const val COMPONENTVIEWER_VERSION = "1.1.2+1.21"
+	const val COMPONENTVIEWER_VERSION = "1.2.0+1.21.1"
 }
 
 plugins {
-	id("fabric-loom") version "1.7.1"
-	kotlin("jvm") version "2.0.0"
+	id("fabric-loom") version "1.10-SNAPSHOT"
+	kotlin("jvm") version "2.1.10"
 	kotlin("plugin.serialization") version "2.0.0"
 }
 
@@ -77,12 +78,19 @@ repositories {
 			includeGroup("maven.modrinth")
 		}
 	}
+	maven {
+		name = "ParchmentMC"
+		url = uri("https://maven.parchmentmc.org")
+	}
 	mavenCentral()
 }
 
 dependencies {
 	minecraft("com.mojang", "minecraft", Constants.MINECRAFT_VERSION)
-	mappings(loom.officialMojangMappings())
+	mappings(loom.layered {
+		officialMojangMappings()
+		parchment("org.parchmentmc.data:parchment-${Constants.MINECRAFT_VERSION}:${Constants.PARCHMENT_VERSION}@zip")
+	})
 	modImplementation("net.fabricmc", "fabric-loader", Constants.LOADER_VERSION)
 
 	modImplementation("net.fabricmc.fabric-api", "fabric-api", Constants.FABRIC_VERSION)
