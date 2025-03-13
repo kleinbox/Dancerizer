@@ -54,8 +54,6 @@ public abstract class HumanoidModelMixin<T extends LivingEntity> extends Ageable
                     long time = livingEntity.level().getGameTime();
                     float elapsedTime = (time - timestamp + deltaTick) / 20F;
 
-                    System.out.println("elapsedTime: "+elapsedTime+", length: "+animation.getLength());
-
                     if (elapsedTime <= animation.getLength()) {
                         // is dancing
                         animation.apply(elapsedTime, head, body, leftArm, rightArm, leftLeg, rightLeg);
