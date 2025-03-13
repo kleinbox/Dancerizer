@@ -95,7 +95,7 @@ public abstract class AnimationsForPlayerMixin extends LivingEntity implements E
             }
 
             if (this.entityData.get(DATA_PLAYER_DANCE_TIMESTAMP) < 0)
-                this.entityData.set(DATA_PLAYER_DANCE_TIMESTAMP, System.currentTimeMillis());
+                this.entityData.set(DATA_PLAYER_DANCE_TIMESTAMP, level().getGameTime());
         }
 
         int taunt = dancerizer$isTaunting();

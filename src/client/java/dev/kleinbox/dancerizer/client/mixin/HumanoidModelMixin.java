@@ -5,6 +5,7 @@ import dev.kleinbox.dancerizer.client.animation.Animations;
 import dev.kleinbox.dancerizer.client.animation.HumanoidPoseManipulator;
 import dev.kleinbox.dancerizer.client.animation.PoseModifier;
 import dev.kleinbox.dancerizer.common.ExpressivePlayer;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.*;
 import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.world.entity.LivingEntity;
@@ -28,7 +29,7 @@ public abstract class HumanoidModelMixin<T extends LivingEntity> extends Ageable
     @Shadow @Final public ModelPart leftLeg;
 
     @Inject(method = "setupAnim(Lnet/minecraft/world/entity/LivingEntity;FFFFF)V", at = @At("HEAD"), cancellable = true)
-    public void dancerizer$setupAnim(T livingEntity, float f, float g, float h, float i, float j, CallbackInfo ci) {
+    public void dancerizer$setupAnim(T livingEntity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch, CallbackInfo ci) {
         if (livingEntity instanceof ExpressivePlayer player) {
             // Check for valid playing animation
             String anim_type = player.dancerizer$getAnimationPose();
@@ -42,18 +43,22 @@ public abstract class HumanoidModelMixin<T extends LivingEntity> extends Ageable
 
                 if (player.dancerizer$isTaunting() > 0) {
                     // Is taunting
-                    animation.apply(0, 0, head, body, leftArm, rightArm, leftLeg, rightLeg);
+                    animation.apply(0, head, body, leftArm, rightArm, leftLeg, rightLeg);
                     hat.copyFrom(head);
                     setCloak(cloak, player);
 
                     ci.cancel();
                 } else if (player.dancerizer$isDancePlaying() > 0) {
                     long timestamp = player.dancerizer$getLastEmoteTimestamp();
-                    long time = System.currentTimeMillis();
+                    float deltaTick = Minecraft.getInstance().getTimer().getGameTimeDeltaPartialTick(false);
+                    long time = livingEntity.level().getGameTime();
+                    float elapsedTime = (time - timestamp + deltaTick) / 20F;
 
-                    if ((time - timestamp) <= (animation.getLength() * 1000)) {
+                    System.out.println("elapsedTime: "+elapsedTime+", length: "+animation.getLength());
+
+                    if (elapsedTime <= animation.getLength()) {
                         // is dancing
-                        animation.apply(timestamp, time, head, body, leftArm, rightArm, leftLeg, rightLeg);
+                        animation.apply(elapsedTime, head, body, leftArm, rightArm, leftLeg, rightLeg);
                         hat.copyFrom(head);
                         setCloak(cloak, player);
 

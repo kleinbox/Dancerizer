@@ -29,7 +29,7 @@ object DanceTimestampPayload : Payloads.CustomPayload<DanceTimestampPayload>() {
     override val handler: PlayPayloadHandler<DanceTimestampPayload>
         = PlayPayloadHandler { _: DanceTimestampPayload, context: Context ->
 
-        context.player().server.execute {
+        context.server().execute {
             val player = context.player() as ServerPlayer
             if ((player as ExpressivePlayer).`dancerizer$isTaunting`() > 1 || (player as ExpressivePlayer).`dancerizer$isDancePlaying`() > 0)
                 return@execute
@@ -45,7 +45,7 @@ object DanceTimestampPayload : Payloads.CustomPayload<DanceTimestampPayload>() {
                 )
 
                 if (result != InteractionResult.FAIL)
-                    (player as ExpressivePlayer).`dancerizer$setLastEmoteTimestamp`(System.currentTimeMillis(), dance)
+                    (player as ExpressivePlayer).`dancerizer$setLastEmoteTimestamp`(context.player().level().gameTime, dance)
             } else
                 player.displayClientMessage(Component.translatable("info.$MODID.missing_dance"), true)
         }

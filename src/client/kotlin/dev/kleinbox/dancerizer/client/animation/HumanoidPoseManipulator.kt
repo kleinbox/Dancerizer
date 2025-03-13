@@ -9,7 +9,6 @@ import org.joml.Vector3f
 import java.util.*
 import kotlin.math.abs
 import kotlin.time.Duration
-import kotlin.time.Duration.Companion.milliseconds
 import kotlin.time.Duration.Companion.seconds
 import kotlin.time.DurationUnit
 
@@ -144,8 +143,7 @@ class HumanoidPoseManipulator(name: String, path: String, data: JsonObject) {
         }
     }
 
-    fun apply(start: Long,
-              timestamp: Long,
+    fun apply(time: Float,
               head: ModelPart?,
               body: ModelPart?,
               leftArm: ModelPart?,
@@ -163,11 +161,10 @@ class HumanoidPoseManipulator(name: String, path: String, data: JsonObject) {
             var calculatedRot: Vector3f? = null
 
             if (!positions.isEmpty()) {
-                val posFrames = determineClosestKeyframes(start, timestamp, positions)
+                val posFrames = determineClosestKeyframes(time, positions)
 
                 calculatedPos = if (posFrames.second != null) {
-                    val timePassed = (timestamp - start).milliseconds.toDouble(DurationUnit.SECONDS)
-                    val progress = ((timePassed - posFrames.first.timestamp) / (posFrames.second!!.timestamp - posFrames.first.timestamp)).coerceIn(0.0, 1.0).toFloat()
+                    val progress = ((time - posFrames.first.timestamp) / (posFrames.second!!.timestamp - posFrames.first.timestamp)).coerceIn(0f, 1f)
 
                     PoseModifier.generateInbetweenFrame(posFrames.first.target, posFrames.second!!.target, progress)
                 } else
@@ -175,10 +172,9 @@ class HumanoidPoseManipulator(name: String, path: String, data: JsonObject) {
             }
 
             if (!rotations.isEmpty()) {
-                val rotFrames = determineClosestKeyframes(start, timestamp, keyframe[part.key]!!["rotation"]!!)
+                val rotFrames = determineClosestKeyframes(time, rotations)
                 calculatedRot = if (rotFrames.second != null) {
-                    val timePassed = (timestamp - start).milliseconds.toDouble(DurationUnit.SECONDS)
-                    val progress = ((timePassed - rotFrames.first.timestamp) / (rotFrames.second!!.timestamp - rotFrames.first.timestamp)).coerceIn(0.0, 1.0).toFloat()
+                    val progress = ((time - rotFrames.first.timestamp) / (rotFrames.second!!.timestamp - rotFrames.first.timestamp)).coerceIn(0f, 1f)
 
                     PoseModifier.generateInbetweenFrame(rotFrames.first.target, rotFrames.second!!.target, progress)
                 } else
@@ -194,8 +190,8 @@ class HumanoidPoseManipulator(name: String, path: String, data: JsonObject) {
      *
      * @throws NullPointerException Whenever the given map is empty and could not find at least one Keyframe.
      */
-    private fun determineClosestKeyframes(start: Long, timestamp: Long, keyframes: NavigableMap<Duration, Keyframe>): Pair<Keyframe, Keyframe?> {
-        val key = abs(timestamp - start).milliseconds.toDouble(DurationUnit.SECONDS).seconds
+    private fun determineClosestKeyframes(time: Float, keyframes: NavigableMap<Duration, Keyframe>): Pair<Keyframe, Keyframe?> {
+        val key = abs(time).toDouble().seconds
         if (keyframes.contains(key)) {
             val lower = keyframes[key]!!
             val higher = keyframes.higherKey(key)?.let { keyframes[it] }
