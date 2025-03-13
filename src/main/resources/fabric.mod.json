@@ -63,6 +63,6 @@
 	},
 	"suggests": {
 		"modmenu": "*",
-		"confetti": "~1.2.0-"
+		"confetti": "~1.3.0-"
 	}
 }

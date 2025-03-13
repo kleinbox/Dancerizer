@@ -121,9 +121,6 @@ public abstract class AnimationsForPlayerMixin extends LivingEntity implements E
         int duration = dancerizer$isDancePlaying();
         if (duration >= 1) {
             this.awardStat(Statistics.INSTANCE.getDANCE());
-            if (!level().isClientSide)
-                //noinspection DataFlowIssue
-                Dancerizer.INSTANCE.getConfetti_emitter().particleRain((ServerPlayer) (Object) this);
 
             duration--;
             dancerizer$setDancePlaying(duration);
