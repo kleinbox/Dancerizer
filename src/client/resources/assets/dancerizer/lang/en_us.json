@@ -6,6 +6,7 @@
   "item.dancerizer.horse_mask": "Horse Mask",
   "item.dancerizer.pokebow": "PokéBow",
   "item.dancerizer.mesmerizing_mask": "Mesmerizing Mask",
+  "item.dancerizer.pompom": "PomPom",
 
   "animation.title.taunt.objection": "OBJECTION!",
   "animation.title.taunt.flexing": "Flexing",
@@ -14,6 +15,7 @@
   "animation.title.dance.geddan": "GEDDAN (Get Down)",
   "animation.title.dance.pokedance": "Pokédance",
   "animation.title.dance.mesmerizer": "MESMERIZER",
+  "animation.title.dance.telepathy": "Telepathy",
 
   "item.modifiers.dancerizer.taunt": "Taunt:",
   "item.modifiers.dancerizer.dance": "Dance:",

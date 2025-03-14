@@ -1,6 +1,5 @@
 {
 	"credit": "Sammy.K | Made with Blockbench",
-	"parent": "pokebow",
 	"textures": {
 		"0": "dancerizer:item/pokebow",
 		"particle": "dancerizer:item/pokebow"

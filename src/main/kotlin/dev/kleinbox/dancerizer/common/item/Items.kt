@@ -26,6 +26,12 @@ object Items : RegisteringContainer<Item>(BuiltInRegistries.ITEM) {
         null
     ))
 
+    val POMPOM = register("pompom", GroovingTrinket(
+        EquipmentSlot.MAINHAND,
+        GroovingTrinket.basePropertiesWithDance("dance/telepathy.default", (20 * 12.04).toInt()).stacksTo(2),
+        null
+    ))
+
     val MLG_GLASSES = register("mlg_glasses", GroovingTrinket(
         EquipmentSlot.HEAD,
         GroovingTrinket.basePropertiesWithTaunt("taunt/dab.default"),
