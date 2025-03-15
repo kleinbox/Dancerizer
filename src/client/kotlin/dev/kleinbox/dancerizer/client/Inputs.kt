@@ -5,8 +5,7 @@ import dev.kleinbox.dancerizer.Dancerizer.MODID
 import dev.kleinbox.dancerizer.Dancerizer.logger
 import dev.kleinbox.dancerizer.client.animation.Animations
 import dev.kleinbox.dancerizer.common.Components
-import dev.kleinbox.dancerizer.common.ExpressivePlayer
-import dev.kleinbox.dancerizer.common.item.GroovingTrinket
+import dev.kleinbox.dancerizer.common.item.groovy.GroovingTrinket
 import dev.kleinbox.dancerizer.common.payload.DanceTimestampPayload
 import dev.kleinbox.dancerizer.common.payload.TauntPayload
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents
@@ -35,8 +34,13 @@ object Inputs {
             return@action
 
         // Validate animations
-        val dances = GroovingTrinket.gatherItemWithDance(client.player!! as ExpressivePlayer)
-        dances.forEach {
+        val dances = GroovingTrinket.gatherItemWithDance(client.player!!.inventory, client.player!!.mainHandItem)
+        val filteredDances = dances.filter { !client.player!!.cooldowns.isOnCooldown(it.item) }
+
+        if (dances.isNotEmpty() && filteredDances.isEmpty())
+            return@action
+
+        filteredDances.forEach {
             val animation = it.components.get(Components.DANCE)
             if (animation != null && !Animations.poses.contains(animation.first))
                 logger.warn("Animation for dance '${animation}' is not present but could be requested")
@@ -55,9 +59,14 @@ object Inputs {
         if (isNotInWorld(client))
             return@action
 
+        val taunts = GroovingTrinket.gatherItemWithDance(client.player!!.inventory, client.player!!.mainHandItem)
+        val filteredTaunts = taunts.filter { !client.player!!.cooldowns.isOnCooldown(it.item) }
+
+        if (taunts.isNotEmpty() && filteredTaunts.isEmpty())
+            return@action
+
         // Validate animations
-        val taunts = GroovingTrinket.gatherItemWithDance(client.player!! as ExpressivePlayer)
-        taunts.forEach {
+        filteredTaunts.forEach {
             val animation = it.components.get(Components.TAUNT)
             if (animation != null && !Animations.poses.contains(animation))
                 logger.warn("Animation for taunt '${animation}' is not present but could be requested")

@@ -1,6 +1,6 @@
 package dev.kleinbox.dancerizer.common.api;
 
-import dev.kleinbox.dancerizer.common.ExpressivePlayer;
+import dev.kleinbox.dancerizer.common.PlayerExtendedData;
 import net.fabricmc.fabric.api.event.Event;
 import net.fabricmc.fabric.api.event.EventFactory;
 import net.minecraft.world.InteractionResult;
@@ -26,5 +26,5 @@ public interface PlayerAnimationCallback {
                 return InteractionResult.PASS;
             });
 
-    InteractionResult interact(ExpressivePlayer player, PlayerAnimationStatus status);
+    InteractionResult interact(PlayerExtendedData data, PlayerAnimationStatus status);
 }

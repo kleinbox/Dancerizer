@@ -3,8 +3,7 @@
   "package": "dev.kleinbox.dancerizer.common.mixin",
   "compatibilityLevel": "JAVA_21",
   "mixins": [
-    "AnimationsForPlayerMixin",
-    "AutoTauntingPlayerMixin"
+    "PlayerDanceTickMixin"
   ],
   "injectors": {
     "defaultRequire": 1

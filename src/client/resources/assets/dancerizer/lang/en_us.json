@@ -18,6 +18,7 @@
   "animation.title.dance.telepathy": "Telepathy",
 
   "item.modifiers.dancerizer.taunt": "Taunt:",
+  "item.modifiers.dancerizer.taunt.effect": "Randomly blocks damage",
   "item.modifiers.dancerizer.dance": "Dance:",
 
   "subtitles.dancerizer.taunt": "Taunting",
@@ -26,8 +27,8 @@
   "dancerizer.keybind.dance": "Perform Dance",
   "key.categories.dancerizer": "Dancerizer",
 
-  "info.dancerizer.missing_taunt": "You cannot use a taunt without the appropriate equipment",
-  "info.dancerizer.missing_dance": "You cannot perform a dance without the appropriate equipment",
+  "info.dancerizer.missing_taunt": "You cannot use a taunt without wearing the appropriate accessory",
+  "info.dancerizer.missing_dance": "You cannot perform a dance without wearing the appropriate accessory",
 
   "dancerizer.screen.config": "Dancerizer: Visual Settings",
 

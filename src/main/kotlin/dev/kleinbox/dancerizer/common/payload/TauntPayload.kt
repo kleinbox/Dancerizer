@@ -1,9 +1,8 @@
 package dev.kleinbox.dancerizer.common.payload
 
 import dev.kleinbox.dancerizer.Dancerizer.MODID
-import dev.kleinbox.dancerizer.common.Components
-import dev.kleinbox.dancerizer.common.ExpressivePlayer
-import dev.kleinbox.dancerizer.common.item.GroovingTrinket
+import dev.kleinbox.dancerizer.common.PlayerExtendedData
+import dev.kleinbox.dancerizer.common.item.groovy.GroovingTrinket
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking.Context
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking.PlayPayloadHandler
 import net.minecraft.network.FriendlyByteBuf
@@ -26,18 +25,26 @@ object TauntPayload : Payloads.CustomPayload<TauntPayload>() {
     override val handler: PlayPayloadHandler<TauntPayload>
             = PlayPayloadHandler { _: TauntPayload, context: Context ->
 
+        @Suppress("UnstableApiUsage")
         context.player().server.execute {
             val player = context.player() as ServerPlayer
-            if ((player as ExpressivePlayer).`dancerizer$isTaunting`() > 1 || (player as ExpressivePlayer).`dancerizer$isDancePlaying`() > 0)
+            var data = player.getAttachedOrCreate(PlayerExtendedData.DATA_TYPE)
+
+            if (data.taunting > 1 || data.danceDuration > 0)
                 return@execute
 
-            val taunts = GroovingTrinket.gatherItemWithTaunt(player)
-
-            if (taunts.isNotEmpty()) {
-                val taunt = taunts.random().components.get(Components.TAUNT)!!
-                (player as ExpressivePlayer).`dancerizer$setTaunt`(taunt, false)
-            } else
+            val allTaunts = GroovingTrinket.gatherItemWithTaunt(player.inventory, player.mainHandItem)
+            if (allTaunts.isEmpty()) {
                 player.displayClientMessage(Component.translatable("info.$MODID.missing_taunt"), true)
+                return@execute
+            }
+
+            val availableTaunts = allTaunts.filter { !player.cooldowns.isOnCooldown(it.item) }
+            if (availableTaunts.isNotEmpty()) {
+                val taunt = availableTaunts.random()
+                data.setTaunt(player.level(), player, taunt, false)
+                player.setAttached(PlayerExtendedData.DATA_TYPE, data)
+            }
         }
     }
 }

@@ -24,6 +24,8 @@ object Dancerizer : ModInitializer {
 		if (FabricLoader.getInstance().isModLoaded("confetti"))
 			confetti_emitter = ConfettiEmitterImplementation
 
+		PlayerExtendedData
+		TauntDamageDenial
 		Payloads
 		SoundEvents
 		Statistics
