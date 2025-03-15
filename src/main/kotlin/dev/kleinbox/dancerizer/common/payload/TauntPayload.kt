@@ -28,7 +28,7 @@ object TauntPayload : Payloads.CustomPayload<TauntPayload>() {
         @Suppress("UnstableApiUsage")
         context.player().server.execute {
             val player = context.player() as ServerPlayer
-            var data = player.getAttachedOrCreate(PlayerExtendedData.DATA_TYPE)
+            val data = player.getAttachedOrCreate(PlayerExtendedData.DATA_TYPE)
 
             if (data.taunting > 1 || data.danceDuration > 0)
                 return@execute

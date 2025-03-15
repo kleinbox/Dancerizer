@@ -2,8 +2,8 @@ package dev.kleinbox.dancerizer.common.mixin;
 
 import dev.kleinbox.dancerizer.common.PlayerExtendedData;
 import dev.kleinbox.dancerizer.common.Statistics;
-import dev.kleinbox.dancerizer.common.api.PlayerAnimationCallback;
-import dev.kleinbox.dancerizer.common.api.PlayerAnimationStatus;
+import dev.kleinbox.dancerizer.common.api.v1.PlayerAnimationCallback;
+import dev.kleinbox.dancerizer.common.api.v1.PlayerAnimationStatus;
 import dev.kleinbox.dancerizer.common.item.groovy.GroovingTrinket;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.EntityType;
@@ -47,11 +47,17 @@ public abstract class PlayerDanceTickMixin extends LivingEntity {
                 data.setDanceStartTimestamp(level().getGameTime());
         }
 
+        LivingEntity entity = this;
+        //noinspection ConstantValue    Don't listen to him
+        if (!(entity instanceof Player player))
+            return;
+
         int taunt = data.getTaunting();
         if (taunt > 0) {
             taunt--;
             if (taunt == 1) {
                 PlayerAnimationCallback.EVENT.invoker().interact(
+                        player,
                         data,
                         new PlayerAnimationStatus(
                                 PlayerAnimationStatus.TYPE.TAUNTING,
@@ -72,6 +78,7 @@ public abstract class PlayerDanceTickMixin extends LivingEntity {
             data.setDanceDuration(duration);
             if (duration == 0) {
                 PlayerAnimationCallback.EVENT.invoker().interact(
+                        player,
                         data,
                         new PlayerAnimationStatus(
                                 PlayerAnimationStatus.TYPE.DANCING,

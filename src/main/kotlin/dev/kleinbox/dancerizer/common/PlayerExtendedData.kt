@@ -8,8 +8,8 @@ import dev.kleinbox.dancerizer.Dancerizer.confetti_emitter
 import dev.kleinbox.dancerizer.Dancerizer.config
 import dev.kleinbox.dancerizer.common.SoundEvents.TAUNT_EVENT
 import dev.kleinbox.dancerizer.common.Statistics.TAUNT
-import dev.kleinbox.dancerizer.common.api.PlayerAnimationCallback
-import dev.kleinbox.dancerizer.common.api.PlayerAnimationStatus
+import dev.kleinbox.dancerizer.common.api.v1.PlayerAnimationCallback
+import dev.kleinbox.dancerizer.common.api.v1.PlayerAnimationStatus
 import net.fabricmc.fabric.api.attachment.v1.AttachmentRegistry
 import net.fabricmc.fabric.api.attachment.v1.AttachmentSyncPredicate
 import net.minecraft.network.codec.ByteBufCodecs
@@ -47,8 +47,13 @@ data class PlayerExtendedData(
         val tauntID = tauntItemStack.components.get(Components.TAUNT)!!
 
         val result = PlayerAnimationCallback.EVENT.invoker().interact(
+            player,
             this,
-            PlayerAnimationStatus(PlayerAnimationStatus.TYPE.TAUNTING, config.data.server.tauntDuration, tauntID)
+            PlayerAnimationStatus(
+                PlayerAnimationStatus.TYPE.TAUNTING,
+                config.data.server.tauntDuration,
+                tauntID
+            )
         )
         if (result == InteractionResult.FAIL) return
 

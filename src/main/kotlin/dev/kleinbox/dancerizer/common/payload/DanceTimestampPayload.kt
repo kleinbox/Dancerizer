@@ -3,8 +3,8 @@ package dev.kleinbox.dancerizer.common.payload
 import dev.kleinbox.dancerizer.Dancerizer.MODID
 import dev.kleinbox.dancerizer.common.Components
 import dev.kleinbox.dancerizer.common.PlayerExtendedData
-import dev.kleinbox.dancerizer.common.api.PlayerAnimationCallback
-import dev.kleinbox.dancerizer.common.api.PlayerAnimationStatus
+import dev.kleinbox.dancerizer.common.api.v1.PlayerAnimationCallback
+import dev.kleinbox.dancerizer.common.api.v1.PlayerAnimationStatus
 import dev.kleinbox.dancerizer.common.item.groovy.GroovingTrinket
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking.Context
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking.PlayPayloadHandler
@@ -49,8 +49,13 @@ object DanceTimestampPayload : Payloads.CustomPayload<DanceTimestampPayload>() {
                 val dance = danceItemStack.components.get(Components.DANCE)!!
 
                 val result = PlayerAnimationCallback.EVENT.invoker().interact(
+                    player,
                     data,
-                    PlayerAnimationStatus(PlayerAnimationStatus.TYPE.DANCING, dance.second, dance.first)
+                    PlayerAnimationStatus(
+                        PlayerAnimationStatus.TYPE.DANCING,
+                        dance.second,
+                        dance.first
+                    )
                 )
 
                 if (result != InteractionResult.FAIL)

@@ -27,7 +27,7 @@ object PlayerAnimationRenderer {
         @Suppress("UnstableApiUsage")
         val data = livingEntity.getAttachedOrCreate(PlayerExtendedData.DATA_TYPE)
 
-        var cloak: ModelPart = model.cloak
+        val cloak: ModelPart = model.cloak
 
         if (data.pose.isNotBlank() && poses.containsKey(data.pose)) {
             val animation = poses[data.pose]
@@ -47,7 +47,7 @@ object PlayerAnimationRenderer {
 
                 if (elapsedTime <= animation!!.length) {
                     // is dancing
-                    animation!!.apply(elapsedTime, model.head, model.body, model.leftArm, model.rightArm, model.leftLeg, model.rightLeg)
+                    animation.apply(elapsedTime, model.head, model.body, model.leftArm, model.rightArm, model.leftLeg, model.rightLeg)
                     model.hat.copyFrom(model.head)
                     setCloak(cloak, model)
 
