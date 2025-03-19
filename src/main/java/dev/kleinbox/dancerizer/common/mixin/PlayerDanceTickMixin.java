@@ -37,14 +37,18 @@ public abstract class PlayerDanceTickMixin extends LivingEntity {
         String pose = data.getPose();
         boolean valid = GroovingTrinket.Companion.hasSpecificAnimation(pose, inventory, getMainHandItem());
 
+        boolean changed = false;
+
         if (!pose.isEmpty()) {
             if (!valid) {
                 data.reset();
                 return;
             }
 
-            if (data.getDanceDuration() < 0)
+            if (data.getDanceDuration() < 0) {
                 data.setDanceStartTimestamp(level().getGameTime());
+                changed = true;
+            }
         }
 
         LivingEntity entity = this;
@@ -67,7 +71,9 @@ public abstract class PlayerDanceTickMixin extends LivingEntity {
                 );
                 data.setPose("");
             }
+
             data.setTaunting(taunt);
+            changed = true;
         }
 
         int duration = data.getDanceDuration();
@@ -76,6 +82,8 @@ public abstract class PlayerDanceTickMixin extends LivingEntity {
 
             duration--;
             data.setDanceDuration(duration);
+            changed = true;
+
             if (duration == 0) {
                 PlayerAnimationCallback.EVENT.invoker().interact(
                         player,
@@ -87,10 +95,12 @@ public abstract class PlayerDanceTickMixin extends LivingEntity {
                         )
                 );
                 data.setPose("");
+                changed = true;
             }
         }
 
-        //noinspection UnstableApiUsage
-        setAttached(PlayerExtendedData.Companion.getDATA_TYPE(), data);
+        if (changed)
+            //noinspection UnstableApiUsage
+            setAttached(PlayerExtendedData.Companion.getDATA_TYPE(), data);
     }
 }
