@@ -20,9 +20,6 @@ object TauntDamageDenial {
         if (data == null || entity !is Player)
             return true
 
-        if (entity.isCreative || entity.isSpectator)
-            return false
-
         val taunts = gatherItemWithTaunt(entity.inventory, entity.mainHandItem).filter { !entity.cooldowns.isOnCooldown(it.item) }
 
         val chance = (100f / 6) * taunts.size
